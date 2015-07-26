@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Booking.aspx.cs" Inherits="ddac.Booking" %>
+﻿<%@ Page enableEventValidation="False" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Booking.aspx.cs" Inherits="ddac.Booking" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <style type="text/css">
         .auto-style1 {
@@ -56,7 +56,7 @@
 				<div class="span1_of_1">
 					<h4>Journey Date:</h4>
 					<div class="book_date btm">
-						<asp:DropDownList ID="dateDDL" runat="server" OnSelectedIndexChanged="dateDDL_SelectedIndexChanged"></asp:DropDownList>
+						<asp:DropDownList ID="dateDDL" runat="server" OnSelectedIndexChanged="dateDDL_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                         <asp:SqlDataSource ID="JourneyDateDDL" runat="server">
                         </asp:SqlDataSource>
 					</div>
@@ -84,7 +84,7 @@
                             <tr>
                                 <td>Available: </td>
                                 <td>
-                                    <asp:Label ID="Label1" Text='<%# Eval("TotalCabinBooked") %>' runat="server"></asp:Label>
+                                    <asp:Label ID="Label1" Text='<%# Eval("Available") %>' runat="server"></asp:Label>
                                 </td>
                             </tr>
                         </table>

@@ -43,8 +43,8 @@ namespace ddac
 					sql += " AND (Region = '" + (String)Session["region"] + "') ";
 
 				if (Session["dateTo"] != null && Session["dateFrom"] != null)
-					sql += "AND (JourneyDate BETWEEN '" + (DateTime)Session["dateFrom"] + "' AND '" +
-						(DateTime)Session["dateTo"] + "')";
+                    sql += "AND (JourneyDate BETWEEN '" + (String)Session["dateFrom"] + "' AND '" +
+                        (String)Session["dateTo"] + "')";
 
 				sql += ") IT LEFT JOIN (SELECT B.ItineraryScheduleID, (C.Capacity*C.TotalInShip - COUNT(BookingID)) AS TotalRemainingHead FROM Booking B, Cabin C " +
 					   "WHERE C.CabinID = B.CabinID GROUP BY B.ItineraryScheduleID, C.Capacity, C.TotalInShip) B ON B.ItineraryScheduleID = IT.ItineraryScheduleID";

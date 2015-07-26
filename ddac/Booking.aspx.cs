@@ -73,7 +73,10 @@ namespace ddac
             try
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM Cabin WHERE ShipID = '" + ShipID + "'", conn);
+                String sql = "SELECT B.ItineraryScheduleID, C.TotalInShip, C.CabinID, C.Capacity, C.CabinName, C.CabinPrice, (C.TotalInShip - COUNT(B.CabinID)) AS TotalCabinBooked " +
+                         "FROM Cabin C LEFT JOIN Booking B ON C.CabinID = B.CabinID WHERE C.ShipID = " + ShipID + " " +
+                         "GROUP BY B.ItineraryScheduleID, C.Capacity, C.CabinID, C.TotalInShip, C.Capacity, C.CabinName, C.CabinPrice";
+                SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 da.Fill(ds);

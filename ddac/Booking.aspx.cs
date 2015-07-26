@@ -42,6 +42,7 @@ namespace ddac
                             RegionLabel.Text = (String)dr["Region"];
                             SourceLabel.Text = (String)dr["Source"];
                             PriceLabel.Text = dr["Price"].ToString();
+                            Session["ShipID"] = Convert.ToInt32(dr["ShipID"]);
                             ShipID = Convert.ToInt32(dr["ShipID"]);
                             ShipNameLabel.Text = (String)dr["ShipName"];
                             ImageButton1.ImageUrl = (String)dr["ItineraryDetails"];
@@ -59,8 +60,8 @@ namespace ddac
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
                     conn.Close();
-                    clbind();
                     jdlbind();
+                    clbind();
                 }
                 else
                 {
@@ -74,9 +75,12 @@ namespace ddac
             try
             {
                 conn.Open();
-                String sql = "SELECT B.ItineraryScheduleID, C.TotalInShip, C.CabinID, C.Capacity, C.CabinName, C.CabinPrice, (C.TotalInShip - COUNT(B.CabinID)) AS TotalCabinBooked " +
-                         "FROM Cabin C LEFT JOIN Booking B ON C.CabinID = B.CabinID WHERE C.ShipID = " + ShipID + " " +
-                         "GROUP BY B.ItineraryScheduleID, C.Capacity, C.CabinID, C.TotalInShip, C.Capacity, C.CabinName, C.CabinPrice";
+                String sql = "SELECT B.ItineraryScheduleID, B.TotalInShip, B.CabinID, B.Capacity, B.CabinName, B.CabinPrice, B.Available FROM " +
+                        "(SELECT B.ItineraryScheduleID, C.TotalInShip, C.CabinID, C.Capacity, C.CabinName, C.CabinPrice, (C.TotalInShip - COUNT(B.CabinID)) AS Available " +
+                        "FROM Cabin C LEFT JOIN Booking B ON C.CabinID = B.CabinID WHERE C.ShipID = " + (Int32)Session["ShipID"] + " " +
+                        "GROUP BY B.ItineraryScheduleID, C.Capacity, C.CabinID, C.TotalInShip, C.Capacity, C.CabinName, C.CabinPrice) B INNER JOIN ItinerarySchedule I " +
+                        "ON I.ItineraryScheduleID = B.ItineraryScheduleID AND B.ItineraryScheduleID = (SELECT ItineraryScheduleID FROM ItinerarySchedule WHERE " +
+                        "JourneyDate = '" + (String)Session["dateDDL"] + "' AND ItineraryID = " + (String)Request.Params.Get("ItineraryID") + ")";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
@@ -119,7 +123,9 @@ namespace ddac
         }
         protected void dateDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //do something
+            Session["dateDDL"] = dateDDL.SelectedValue;
+            //jdlbind();
+            clbind();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ddac.Azure1" generation="1" functional="0" release="0" Id="8c4052ce-c3f7-4d3a-8a6f-548f30ceb3b8" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
+<serviceModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ddac.Azure1" generation="1" functional="0" release="0" Id="a1f3535f-25a7-4308-b2ba-5ed2990ef902" dslVersion="1.2.0.0" xmlns="http://schemas.microsoft.com/dsltools/RDSM">
   <groups>
     <group name="ddac.Azure1Group" generation="1" functional="0" release="0">
       <componentports>
@@ -70,9 +70,9 @@
     </group>
   </groups>
   <implements>
-    <implementation Id="17e2b2bf-e5fc-422e-b4d1-ff9a5bf8cc70" ref="Microsoft.RedDog.Contract\ServiceContract\ddac.Azure1Contract@ServiceDefinition">
+    <implementation Id="c2bfd324-da21-466b-b95e-822f23eae0ad" ref="Microsoft.RedDog.Contract\ServiceContract\ddac.Azure1Contract@ServiceDefinition">
       <interfacereferences>
-        <interfaceReference Id="95695816-894a-47ee-bd31-1f58da5b881f" ref="Microsoft.RedDog.Contract\Interface\ddac:Endpoint1@ServiceDefinition">
+        <interfaceReference Id="c4e92b49-66b2-4043-851b-1b63bfc70fd1" ref="Microsoft.RedDog.Contract\Interface\ddac:Endpoint1@ServiceDefinition">
           <inPort>
             <inPortMoniker name="/ddac.Azure1/ddac.Azure1Group/ddac:Endpoint1" />
           </inPort>

@@ -1,16 +1,16 @@
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] DiagnosticsStoreRootPath set to: C:\Users\Grace\AppData\Local\dftmp\Resources\a7ad2a23-a62e-4879-8336-0e667b8f77a8
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Loading config file: D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Checking VM Type
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Extension set to Emulator Mode
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Reading XML configuration file
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Bypassing private config decryption
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Stopping the running plugin, if any
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] No DiagnosticsPlugin is running.
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:46 PM] Killing any DiagnosticsPlugin that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:47 PM] Killing any MonAgentHost that might remain.
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:47 PM] Diagnostics plugin stopped successfully
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:52:47 PM] Resetting DiagnosticPlugin
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:53:59 PM] DiagnosticsPlugin launched successfully with new configuration
-DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 1:53:59 PM] DiagnosticPlugin exited with code 0
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] DiagnosticsStoreRootPath set to: C:\Users\Grace\AppData\Local\dftmp\Resources\c9ff9279-27e2-4312-9ad0-4ce6b0fb102e
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Loading config file: D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:45 PM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:46 PM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:46 PM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:46 PM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:46 PM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:00:46 PM] Resetting DiagnosticPlugin
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:01:57 PM] DiagnosticsPlugin launched successfully with new configuration
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 2:01:57 PM] DiagnosticPlugin exited with code 0

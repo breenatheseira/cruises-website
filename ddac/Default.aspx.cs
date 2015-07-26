@@ -26,20 +26,15 @@ namespace ddac
             Decimal d = Convert.ToDecimal((String)Request.Form["price"]);
             Session["price"] = Convert.ToInt32((String)Request.Form["price"]);
 
-            if (!string.IsNullOrEmpty((String)Request["fDate"]) && !string.IsNullOrEmpty((String)Request["tDate"]))
+            if (!"DD/MM/YYYY".Equals((String)Request["fDate"]) && !"DD/MM/YYYY".Equals((String)Request["tDate"]))
             {
                 fromDate = Convert.ToDateTime((String)Request.Form["fDate"]);
-                var fromDateFormat = fromDate.Date.ToString("yyyy-MM-dd");
                 toDate = Convert.ToDateTime((String)Request.Form["tDate"]);
-                var toDateFormat = toDate.Date.ToString("yyyy-MM-dd");
-                Session["dateTo"] = toDateFormat;
-                Session["dateFrom"] = fromDateFormat;
             }
-            else
-            {
-                Session["dateFrom"] = fromDate;
-                Session["dateTo"] = toDate;
-            }
+            var fromDateFormat = fromDate.Date.ToString("yyyy-MM-dd");
+            var toDateFormat = toDate.Date.ToString("yyyy-MM-dd");
+            Session["dateTo"] = toDateFormat;
+            Session["dateFrom"] = fromDateFormat;
             Response.Redirect("/Itinerary.aspx");
         }
     }

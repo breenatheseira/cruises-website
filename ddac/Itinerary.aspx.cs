@@ -37,14 +37,14 @@ namespace ddac
 				String ITcolumns = "IT.ItineraryDetails, IT.ItineraryID, IT.Region, IT.Source, IT.Price, IT.ItineraryScheduleID, IT.JourneyDate, dbo.fx_getShipName(IT.ShipID) AS ShipName";
 				String Icolumns = "I.ItineraryDetails, I.ItineraryID, I.Region, I.Source, I.Price, ID.ItineraryScheduleID, ID.JourneyDate, I.ShipID ";
 				String sql = "SELECT DISTINCT " + ITcolumns + " FROM (SELECT " + Icolumns + " FROM Itinerary I LEFT JOIN ItinerarySchedule ID " +
-					"ON I.ItineraryID = ID.ItineraryID  WHERE Price < " + (Int32)Session["price"];
+                    "ON I.ItineraryID = ID.ItineraryID WHERE Price < " + (Int32)Session["price"] + " ";
 
 				if (!string.IsNullOrEmpty((String)Session["region"]))
-					sql += " AND (Region = '" + (String)Session["region"] + "') ";
+                    sql += "AND Region = '" + (String)Session["region"] + "' ";
 
 				if (Session["dateTo"] != null && Session["dateFrom"] != null)
-                    sql += "AND (JourneyDate BETWEEN '" + (String)Session["dateFrom"] + "' AND '" +
-                        (String)Session["dateTo"] + "')";
+                    sql += "AND JourneyDate BETWEEN '" + (String)Session["dateFrom"] + "' AND '" +
+                        (String)Session["dateTo"] + "'";
 
 				sql += ") IT LEFT JOIN (SELECT B.ItineraryScheduleID, (C.Capacity*C.TotalInShip - COUNT(BookingID)) AS TotalRemainingHead FROM Booking B, Cabin C " +
 					   "WHERE C.CabinID = B.CabinID GROUP BY B.ItineraryScheduleID, C.Capacity, C.TotalInShip) B ON B.ItineraryScheduleID = IT.ItineraryScheduleID";

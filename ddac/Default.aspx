@@ -65,8 +65,9 @@
 					    <h5>Region:</h5>
 					    <!----------start section_region----------->
 					    <div class="section_room">
-                            <asp:DropDownList ID="RegionDropDown" runat="server" DataSourceID="ItineraryCode" DataTextField="Region" DataValueField="Region" class="frm-field required"></asp:DropDownList>
-                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
+                            <asp:DropDownList ID="RegionDropDown" runat="server" DataSourceID="ItineraryCode" DataTextField="Region" AppendDataBoundItems="true" DataValueField="Region" class="frm-field required">
+                                <asp:ListItem Text="All Cruises" Value="" Selected="True"/>
+                            </asp:DropDownList>                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
 					    </div>	
 				    </li>
 				    <li  class="span1_of_1 left">

@@ -32,7 +32,7 @@ namespace ddac
 				String ITcolumns = "IT.ItineraryDetails, IT.ItineraryID, IT.Region, IT.Source, IT.Price, IT.ItineraryScheduleID, IT.JourneyDate, dbo.fx_getShipName(IT.ShipID) AS ShipName";
 				String Icolumns = "I.ItineraryDetails, I.ItineraryID, I.Region, I.Source, I.Price, ID.ItineraryScheduleID, ID.JourneyDate, I.ShipID ";
 				String sql = "SELECT DISTINCT " + ITcolumns + " FROM (SELECT " + Icolumns + " FROM Itinerary I LEFT JOIN ItinerarySchedule ID " +
-                    "ON I.ItineraryID = ID.ItineraryID WHERE Price < " + (Int32)Session["price"] + " ";
+                    "ON I.ItineraryID = ID.ItineraryID WHERE Price < " + (Int32)Session["price"] + " AND JourneyDate > GETDATE() ";
 
 				if (!string.IsNullOrEmpty((String)Session["region"]))
                     sql += "AND Region = '" + (String)Session["region"] + "' ";

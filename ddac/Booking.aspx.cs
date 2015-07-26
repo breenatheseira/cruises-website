@@ -95,7 +95,7 @@ namespace ddac
 
         protected void jdlbind()
         {
-            String sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " ORDER BY JourneyDate ";
+            String sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " AND JourneyDate > GETDATE() ORDER BY JourneyDate ";
             try
             {
                 SqlCommand cmd = new SqlCommand(sql, conn);

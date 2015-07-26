@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ddac", "ddac.csproj", "{F4D8AEF4-B0B6-4FDA-8378-53718E291014}"
 EndProject
-Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ddac.Azure", "ddac.Azure\ddac.Azure.ccproj", "{A552E682-F84A-4A88-BB9C-E4E4F6C186C8}"
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ddac.Azure", "ddac.Azure1\ddac.Azure.ccproj", "{B0C00603-6A72-4568-BBEB-09CDA511CCAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{F4D8AEF4-B0B6-4FDA-8378-53718E291014}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4D8AEF4-B0B6-4FDA-8378-53718E291014}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4D8AEF4-B0B6-4FDA-8378-53718E291014}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A552E682-F84A-4A88-BB9C-E4E4F6C186C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A552E682-F84A-4A88-BB9C-E4E4F6C186C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A552E682-F84A-4A88-BB9C-E4E4F6C186C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A552E682-F84A-4A88-BB9C-E4E4F6C186C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0C00603-6A72-4568-BBEB-09CDA511CCAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0C00603-6A72-4568-BBEB-09CDA511CCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0C00603-6A72-4568-BBEB-09CDA511CCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0C00603-6A72-4568-BBEB-09CDA511CCAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

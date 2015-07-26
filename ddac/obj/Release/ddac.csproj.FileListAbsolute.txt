@@ -35,7 +35,6 @@ D:\Projects\v2\ddac\ddac\bin\Microsoft.ScriptManager.MSAjax.dll
 D:\Projects\v2\ddac\ddac\bin\Microsoft.ScriptManager.WebForms.dll
 D:\Projects\v2\ddac\ddac\bin\Microsoft.Web.Infrastructure.dll
 D:\Projects\v2\ddac\ddac\bin\Microsoft.WindowsAzure.Configuration.dll
-D:\Projects\v2\ddac\ddac\bin\Microsoft.WindowsAzure.Diagnostics.dll
 D:\Projects\v2\ddac\ddac\bin\Microsoft.WindowsAzure.Storage.dll
 D:\Projects\v2\ddac\ddac\bin\Newtonsoft.Json.dll
 D:\Projects\v2\ddac\ddac\bin\Owin.dll

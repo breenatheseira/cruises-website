@@ -52,6 +52,7 @@ namespace ddac
                             notification.Text = "ItineraryNo: #" + ItineraryIDLabel.Text + " values could not be found.";
                             notification.ForeColor = System.Drawing.Color.Red;
                         }
+                        conn.Close(); 
                     }
                     catch (Exception err)
                     {
@@ -59,8 +60,9 @@ namespace ddac
                         notification.Text = err.Message;
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
-                    conn.Close();
                     jdlbind();
+                    Session["dateDDL"] = dateDDL.SelectedValue;
+                    cabinlbind();
                     clbind();
                 }
                 else
@@ -124,8 +126,32 @@ namespace ddac
         protected void dateDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["dateDDL"] = dateDDL.SelectedValue;
-            //jdlbind();
             clbind();
+        }
+
+        protected void cabinlbind()
+        {
+            String sql = "SELECT CabinID, CabinName FROM CABIN WHERE SHIPID = (SELECT ShipID FROM Itinerary WHERE ItineraryID = (SELECT ItineraryID FROM ItinerarySchedule WHERE ItineraryScheduleID = " +
+                         "(SELECT ItineraryScheduleID FROM ItinerarySchedule WHERE JourneyDate = '" + (String)Session["dateDDL"] + "' AND ItineraryID = " + (String)Request.Params.Get("ItineraryID") + ")))";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                cabinDDL.DataSource = ds;
+                cabinDDL.DataTextField = "CabinName";
+                cabinDDL.DataValueField = "CabinID";
+                cabinDDL.DataBind();
+                conn.Close();
+            }
+            catch (Exception err)
+            {
+                conn.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
         }
     }
 }

@@ -53,12 +53,16 @@
                 <asp:Label ID="notification" runat="server"></asp:Label> 
             </p>
 			<div class="span_of_2">
-				<div class="span1_of_1">
+				<div class="span2_of_1">
 					<h4>Journey Date:</h4>
 					<div class="book_date btm">
 						<asp:DropDownList ID="dateDDL" runat="server" OnSelectedIndexChanged="dateDDL_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
-                        <asp:SqlDataSource ID="JourneyDateDDL" runat="server">
-                        </asp:SqlDataSource>
+                    </div>
+                </div>
+                <div class="span2_of_1">
+					<h4>Cabin Selection:</h4>
+					<div class="book_date btm">
+                        <asp:DropDownList ID="cabinDDL" runat="server"></asp:DropDownList>
 					</div>
                 </div>
                 <asp:DataList ID="CabinList" runat="server"

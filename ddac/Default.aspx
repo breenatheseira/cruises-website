@@ -73,7 +73,7 @@
 					    <h5>From:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="fDate" name="fDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="fDate" name="fDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>					
 				    </li>
@@ -81,7 +81,7 @@
 					    <h5>To:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>		
 				    </li>

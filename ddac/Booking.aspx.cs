@@ -26,37 +26,45 @@ namespace ddac
 
             if (!IsPostBack)
             {
-                ItineraryIDLabel.Text = (String)Request.Params.Get("ItineraryID");
-
-                try
+                String itineraryID = (String)Request.Params.Get("ItineraryID");
+                if (!string.IsNullOrEmpty(itineraryID))
                 {
-                    conn.Open();
-                    SqlCommand cmd = new SqlCommand("SELECT I.*, ShipName FROM Itinerary I, Ship S WHERE I.ShipID = S.ShipID AND ItineraryID = '" + ItineraryIDLabel.Text + "'", conn);
-                    SqlDataReader dr = cmd.ExecuteReader();
+                    ItineraryIDLabel.Text = itineraryID;
 
-                    if (dr.Read())
+                    try
                     {
-                        RegionLabel.Text = (String)dr["Region"];
-                        SourceLabel.Text = (String)dr["Source"];
-                        PriceLabel.Text = dr["Price"].ToString();
-                        ShipID = Convert.ToInt32(dr["ShipID"]);
-                        ShipNameLabel.Text = (String)dr["ShipName"];
-                        ImageButton1.ImageUrl = (String)dr["ItineraryDetails"];
+                        conn.Open();
+                        SqlCommand cmd = new SqlCommand("SELECT I.*, ShipName FROM Itinerary I, Ship S WHERE I.ShipID = S.ShipID AND ItineraryID = '" + ItineraryIDLabel.Text + "'", conn);
+                        SqlDataReader dr = cmd.ExecuteReader();
+    
+                        if (dr.Read())
+                        {
+                            RegionLabel.Text = (String)dr["Region"];
+                            SourceLabel.Text = (String)dr["Source"];
+                            PriceLabel.Text = dr["Price"].ToString();
+                            ShipID = Convert.ToInt32(dr["ShipID"]);
+                            ShipNameLabel.Text = (String)dr["ShipName"];
+                            ImageButton1.ImageUrl = (String)dr["ItineraryDetails"];
+                        }
+                        else
+                        {
+                            notification.Text = "ItineraryNo: #" + ItineraryIDLabel.Text + " values could not be found.";
+                            notification.ForeColor = System.Drawing.Color.Red;
+                        }
                     }
-                    else
+                    catch (Exception err)
                     {
-                        notification.Text = "ItineraryNo: #" + ItineraryIDLabel.Text + " values could not be found.";
+                        conn.Close();
+                        notification.Text = err.Message;
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
-                }
-                catch (Exception err)
-                {
                     conn.Close();
-                    notification.ForeColor = System.Drawing.Color.Red;
-                    notification.Text = err.Message;
+                    clbind();
                 }
-                conn.Close();
-                clbind();
+                else
+                {
+                    Response.Redirect("./Itinerary.aspx");
+                }               
             }
         }
 

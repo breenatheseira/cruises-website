@@ -76,6 +76,24 @@ namespace ddac {
         protected global::System.Web.UI.WebControls.Label notification;
         
         /// <summary>
+        /// dateDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList dateDDL;
+        
+        /// <summary>
+        /// JourneyDateDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource JourneyDateDDL;
+        
+        /// <summary>
         /// CabinList control.
         /// </summary>
         /// <remarks>
@@ -83,14 +101,5 @@ namespace ddac {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DataList CabinList;
-        
-        /// <summary>
-        /// DropDownList1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
     }
 }

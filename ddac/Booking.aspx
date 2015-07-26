@@ -52,67 +52,53 @@
             <p>
                 <asp:Label ID="notification" runat="server"></asp:Label> 
             </p>
-            <asp:DataList ID="CabinList" runat="server"
-            BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="2" Font-Bold="True"
-            Font-Names="Verdana" Font-Size="Small" GridLines="Both" RepeatColumns="4" RepeatDirection="Horizontal"
-            Width="100%">
-            <ItemStyle/>
-            <ItemTemplate>
-                <h3><asp:Label ID="CabinNameLabel" Text='<%# Eval("CabinName") %>' runat="server"></asp:Label></h3>
-                <table> 
-                    <tr>
-                        <td>Cabin Price: </td>
-                        <td>
-                            <asp:Label ID="CabinPriceLabel" Text='<%# Eval("CabinPrice") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Capacity: </td>
-                        <td>
-                            <asp:Label ID="CapacityLabel" Text='<%# Eval("Capacity") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Available: </td>
-                        <td>
-                            <asp:Label ID="Label1" Text='<%# Eval("TotalCabinBooked") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                </table>
-            </ItemTemplate>
-            <SelectedItemStyle Font-Bold="True" ForeColor="White" />
-        </asp:DataList>
-        </div>			
 			<div class="span_of_2">
 				<div class="span1_of_1">
 					<h4>Journey Date:</h4>
 					<div class="book_date btm">
-						<asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-					</div>	
-					<div class="sel_room">
-						<h4>Cabin To Book</h4>
-						<select id="country" onchange="change_country(this.value)" class="frm-field required">
-							<option value="null">Select a type of Room</option>
-				            <option value="null">Suite room</option>         
-				            <option value="AX">Single room</option>
-							<option value="AX">Double room</option>
-		        		</select>
-					</div>	
-					<div class="sel_room left">
-						<h4>adults per room:</h4>
-						<select id="country" onchange="change_country(this.value)" class="frm-field required">
-							<option value="null">1</option>
-				            <option value="null">2</option>         
-				            <option value="AX">3</option>
-							<option value="AX">4</option>
-		        		</select>
-					</div>	
-				</div>
-			<div class="res_btn">
-				<form>
-                    <input type="submit" value="book now" style="width: 280px;">
-				</form>
-			</div>
+						<asp:DropDownList ID="dateDDL" runat="server" OnSelectedIndexChanged="dateDDL_SelectedIndexChanged"></asp:DropDownList>
+                        <asp:SqlDataSource ID="JourneyDateDDL" runat="server">
+                        </asp:SqlDataSource>
+					</div>
+                </div>
+                <asp:DataList ID="CabinList" runat="server"
+                    BorderStyle="None" BorderWidth="1px" CellPadding="5" CellSpacing="2" Font-Bold="True"
+                    Font-Names="Verdana" Font-Size="Small" GridLines="Both" RepeatColumns="4" RepeatDirection="Horizontal"
+                    Width="100%">
+                    <ItemStyle/>
+                    <ItemTemplate>
+                        <h3><asp:Label ID="CabinNameLabel" Text='<%# Eval("CabinName") %>' runat="server"></asp:Label></h3>
+                        <table> 
+                            <tr>
+                                <td>Cabin Price: $</td>
+                                <td>
+                                    <asp:Label ID="CabinPriceLabel" Text='<%# Eval("CabinPrice") %>' runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Capacity: </td>
+                                <td>
+                                    <asp:Label ID="CapacityLabel" Text='<%# Eval("Capacity") %>' runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Available: </td>
+                                <td>
+                                    <asp:Label ID="Label1" Text='<%# Eval("TotalCabinBooked") %>' runat="server"></asp:Label>
+                                </td>
+                            </tr>
+                        </table>
+                    </ItemTemplate>
+                    <SelectedItemStyle Font-Bold="True" ForeColor="White" />
+                </asp:DataList>
+                <div class="clear"></div>
+            </div>	
+        </div>
+		<div class="res_btn">
+			<form>
+                <input type="submit" value="book now" style="width: 280px;" class="btn btn-default">
+			</form>
+		</div>
 	</div>
 </div>
 </div>		

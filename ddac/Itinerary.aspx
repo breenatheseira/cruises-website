@@ -73,7 +73,7 @@
 					    <h5>check-in-date:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="datepicker" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+								<input class="date" id="fromDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 
 					    </div>					
@@ -82,7 +82,7 @@
 					    <h5>check-out-date:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="datepicker1" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="toDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>		
 				    </li>
@@ -91,7 +91,7 @@
 					    <!----------start section_room----------->
 					    <div class="section_price">
 						    <select id="price" onchange="change_price(this.value)" class="frm-field required">
-							    <option value="">Any Price</option>
+							    <option value="1000000">Any Price</option>
                                 <option value="1000">< $1000</option>
 				                <option value="1500">< $1500</option>         
 				                <option value="2000">< $2000</option>
@@ -143,6 +143,12 @@
                     <td>
                         <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipName") %>' runat="server"></asp:Label>
                     </td>
+					<tr>
+                    <td>Journey Date: </td>
+                    <td>
+                        <asp:Label ID="JourneyDateLabel" Text='<%# Eval("JourneyDate") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
                 </tr>
             </table>
             <h4><a  href="Booking.aspx?ItineraryID=<%# Eval("ItineraryID") %>">Book now</a></h4>

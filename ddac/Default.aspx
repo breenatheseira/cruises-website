@@ -81,9 +81,7 @@
 				    <li  class="span1_of_1 left">
 					    <h5>To:</h5>
 					    <div class="book_date">
-						    <form>
-							    <input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
-						    </form>
+							<input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 					    </div>		
 				    </li>
 				    <li class="span1_of_1 left">

@@ -60,6 +60,7 @@ namespace ddac
                     }
                     conn.Close();
                     clbind();
+                    jdlbind();
                 }
                 else
                 {
@@ -90,6 +91,35 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
+        }
+
+        protected void jdlbind()
+        {
+            String sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " ORDER BY JourneyDate ";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                da.Fill(ds);
+                dateDDL.DataSource = ds;
+                dateDDL.DataTextField = "JourneyDate";
+                dateDDL.DataValueField = "JourneyDate";
+                dateDDL.DataTextFormatString = "{0:D}";
+                dateDDL.DataBind();
+                conn.Close();
+            }
+            catch (Exception err)
+            {
+                conn.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
+        }
+        protected void dateDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //do something
         }
     }
 }

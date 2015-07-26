@@ -3,7 +3,8 @@
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#datepicker,#datepicker1").datepicker();
+            $("#fDate").datepicker();
+            $("#tDate").datepicker();
         });
 	</script>
 </asp:Content>
@@ -69,27 +70,26 @@
 					    </div>	
 				    </li>
 				    <li  class="span1_of_1 left">
-					    <h5>check-in-date:</h5>
+					    <h5>From:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="datepicker" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="fDate" name="fDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>					
 				    </li>
 				    <li  class="span1_of_1 left">
-					    <h5>check-out-date:</h5>
+					    <h5>To:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="datepicker1" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>		
 				    </li>
 				    <li class="span1_of_1 left">
 					    <h5>Price Range:</h5>
-					    <!----------start section_room----------->
 					    <div class="section_price">
-						    <select id="price" onchange="change_price(this.value)" class="frm-field required">
-							    <option value="">Any Price</option>
+						    <select id="price" onchange="change_price(this.value)" name="price" class="frm-field required">
+							    <option value="1000000">Any Price</option>
                                 <option value="1000">< $1000</option>
 				                <option value="1500">< $1500</option>         
 				                <option value="2000">< $2000</option>

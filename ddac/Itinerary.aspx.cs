@@ -13,7 +13,6 @@ namespace ddac
     public partial class Itinerary : System.Web.UI.Page
     {
         public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
-        String sql;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,10 +20,6 @@ namespace ddac
             {
                 ilbind();
             }
-        }
-        protected void SearchButton_Click(object sender, EventArgs e)
-        {
-
         }
 
         protected void ilbind()
@@ -64,6 +59,27 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
+        }
+
+        protected void SearchButton_Click(object sender, EventArgs e)
+        {
+            DateTime fromDate = Convert.ToDateTime("1900-01-01");
+            DateTime toDate = Convert.ToDateTime("9999-12-31");
+            Session["region"] = RegionDropDown.SelectedValue.ToString();
+            Decimal d = Convert.ToDecimal((String)Request.Form["price"]);
+            Session["price"] = Convert.ToInt32((String)Request.Form["price"]);
+    
+            if (!"DD/MM/YYYY".Equals((String)Request["fDate"]) && !"DD/MM/YYYY".Equals((String)Request["tDate"]))
+            {
+                fromDate = Convert.ToDateTime((String)Request.Form["fDate"]);
+                toDate = Convert.ToDateTime((String)Request.Form["tDate"]);
+            }
+    
+            var fromDateFormat = fromDate.Date.ToString("yyyy-MM-dd");
+            var toDateFormat = toDate.Date.ToString("yyyy-MM-dd");
+            Session["dateTo"] = toDateFormat;
+            Session["dateFrom"] = fromDateFormat;
+            ilbind();
         }
     }
 }

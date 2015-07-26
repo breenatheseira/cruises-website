@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Itinerary.aspx.cs" Inherits="ddac.Itinerary" %>
+﻿<%@ Page enableEventValidation="False" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Itinerary.aspx.cs" Inherits="ddac.Itinerary" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <script type="text/javascript">
 		$(document).ready(function() {
-		$( "#datepicker,#datepicker1" ).datepicker();
+		    $("#fDate,#tDate").datepicker();
 		});
 	</script>
 
@@ -65,32 +65,32 @@
 					    <h5>Region:</h5>
 					    <!----------start section_region----------->
 					    <div class="section_room">
-                            <asp:DropDownList ID="RegionDropDown" runat="server" DataSourceID="ItineraryCode" DataTextField="Region" DataValueField="Region" class="frm-field required"></asp:DropDownList>
-                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
+                            <asp:DropDownList ID="RegionDropDown" runat="server" DataSourceID="ItineraryCode" DataTextField="Region" AppendDataBoundItems="true" DataValueField="Region" class="frm-field required">
+                                <asp:ListItem Text="All Cruises" Value="" Selected="True"/>
+                            </asp:DropDownList>                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
 					    </div>	
 				    </li>
 				    <li  class="span1_of_1 left">
-					    <h5>check-in-date:</h5>
+					    <h5>From:</h5>
 					    <div class="book_date">
 						    <form>
-								<input class="date" id="fromDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+								<input class="date" id="fDate" name="fDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 
 					    </div>					
 				    </li>
 				    <li  class="span1_of_1 left">
-					    <h5>check-out-date:</h5>
+					    <h5>To:</h5>
 					    <div class="book_date">
 						    <form>
-							    <input class="date" id="toDate" type="text" value="DD/MM/YY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
+							    <input class="date" id="tDate" name="tDate" type="text" value="DD/MM/YYYY" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'DD/MM/YY';}">
 						    </form>
 					    </div>		
 				    </li>
 				    <li class="span1_of_1 left">
 					    <h5>Price Range:</h5>
-					    <!----------start section_room----------->
 					    <div class="section_price">
-						    <select id="price" onchange="change_price(this.value)" class="frm-field required">
+						    <select id="price" onchange="change_price(this.value)" name="price" class="frm-field required">
 							    <option value="1000000">Any Price</option>
                                 <option value="1000">< $1000</option>
 				                <option value="1500">< $1500</option>         

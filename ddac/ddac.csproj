@@ -309,6 +309,7 @@
     <Content Include="Bundle.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
+    <None Include="Properties\PublishProfiles\carnivalcruise.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,16 @@
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] DiagnosticsStoreRootPath set to: C:\Users\Grace\AppData\Local\dftmp\Resources\0e9031b2-4523-4c0d-89a5-398f11296a97
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Loading config file: D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Checking VM Type
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Emulator config file set to D:\Projects\v2\ddac\ddac\ddac.Azure1\csx\Debug\roles\ddac\approot\diagnostics.wadcfgx
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Extension set to Emulator Mode
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Reading XML configuration file
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Bypassing private config decryption
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:42 AM] Stopping the running plugin, if any
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:43 AM] No DiagnosticsPlugin is running.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:43 AM] Killing any DiagnosticsPlugin that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:43 AM] Killing any MonAgentHost that might remain.
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:43 AM] Diagnostics plugin stopped successfully
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:03:43 AM] Resetting DiagnosticPlugin
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:04:55 AM] DiagnosticsPlugin launched successfully with new configuration
+DiagnosticsPluginLauncher.exe Information: 0 : [26/7/2015 11:04:55 AM] DiagnosticPlugin exited with code 0

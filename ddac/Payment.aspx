@@ -7,13 +7,13 @@
     <title></title>
 </head>
 <body>
-    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+    <form action="<% = website %>" method="post">
 
     <input type="hidden" name="cmd" value="_xclick" />
-    <input type="hidden" name="business" value="breenatheseira-facilitator@yahoo.com" />
+    <input type="hidden" name="business" value="<%= email %>" />
 
-    <input type="hidden" name="item_name" value="test"/>
-    <input type="hidden" name="amount" value="10"/> 
+    <input type="hidden" name="item_name" value="<%= item_name %>"/>
+    <input type="hidden" name="amount" value="<%= total_price %>"/> 
     <input type="submit" value="Buy!" />
 
 </form>

@@ -7,12 +7,16 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using SendGrid;
+using System.Net;
+using System.Net.Mail;
 
 namespace ddac
 {
     public partial class Booking : System.Web.UI.Page
     {
         public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
+        SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
         int ShipID;
         String sql;
         String itineraryID;
@@ -129,7 +133,9 @@ namespace ddac
         }
         protected void dateDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Session["dateDDL"] = dateDDL.SelectedValue;
+            DateTime date = Convert.ToDateTime(dateDDL.SelectedValue);
+            String sqlDate = date.ToString("yyyy-MM-dd");
+            Session["dateDDL"] = sqlDate;
             clbind();
         }
 
@@ -157,15 +163,11 @@ namespace ddac
                 notification.Text = err.Message;
             }
         }
-                protected void cabinDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Session["cabinDDL"] = cabinDDL.SelectedValue;
-        }
 
         protected void BookButton_Click(object sender, EventArgs e)
         {
             String PassengerID = (String)Session["PassengerID"];
-            sql = "SELECT Name, Email FROM Passenger WHERE PassengerID = '" + PassengerID;
+            sql = "SELECT Name, Email FROM Passenger WHERE PassengerID = '" + PassengerID + "'";
             try
             {
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -176,45 +178,50 @@ namespace ddac
                 {
                     String PassengerName = rdr["Name"].ToString();
                     String PassengerEmail = rdr["Email"].ToString();
-
+                    String dateDLL = (String)Session["dateDDL"];
+                    conn.Close();
                     try
                     {
                         String sql1 = "INSERT INTO Booking ([PassengerID],[ItineraryScheduleID],[CabinID],[BookingDate],[BookingStatus],[PaymentStatus]) " +
-                                    "VALUES (@pass_id, dbo.fx_getItineraryScheduleID(@itid, @journeydate), @cabin_id, GETDATE(), 'B', 'N')";
-                        SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
+                                    "OUTPUT INSERTED.BookingID VALUES (@pass_id, dbo.fx_getItineraryScheduleID(@itid, @journeydate), @cabin_id, GETDATE(), 'B', 'N')";
                         SqlCommand insertCommand = new SqlCommand(sql1, conn1);
                         insertCommand.Parameters.AddWithValue("@pass_id", PassengerID);
-                        insertCommand.Parameters.AddWithValue("@itid", itineraryID);
-                        insertCommand.Parameters.AddWithValue("@journeydate", (String)Session["dateDDL"]);
-                        insertCommand.Parameters.AddWithValue("@cabin_id", (String)Session["cabinDDL"]);
+                        insertCommand.Parameters.AddWithValue("@itid", ItineraryIDLabel.Text);
+                        insertCommand.Parameters.AddWithValue("@journeydate", dateDLL);
+                        insertCommand.Parameters.AddWithValue("@cabin_id", cabinDDL.SelectedValue);
 
+                        conn1.Open();
+                        Int32 BookingId = Convert.ToInt32(insertCommand.ExecuteScalar().ToString());
+                        conn1.Close();
+
+                        sql = "SELECT CabinPrice FROM Cabin WHERE CabinID = " + cabinDDL.SelectedValue;
+                        cmd = new SqlCommand(sql, conn);
                         conn.Open();
-                        int BookingId = (int)cmd.ExecuteScalar();
-                        conn.Close();
+                        SqlDataReader dr = cmd.ExecuteReader();
 
-                        int i;
-                        for (i = 0; i < 4; i++)
+                        Decimal cPrice = 0;
+                        if (dr.Read())
                         {
-                            if ((CabinList.Items[i].FindControl("CabinName") as Label).Text == (String)Session["cabinDDL"])
-                            {
-                                break;
-                            }
+                            cPrice = Convert.ToDecimal(dr["CabinPrice"].ToString());
+                            Decimal Total = Convert.ToDecimal(PriceLabel.Text) + cPrice;
+                            conn.Close();
+                            Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + cabinDDL.SelectedValue.ToString() + "&total=" + Total);
                         }
-                        Decimal cPrice = Convert.ToDecimal((CabinList.Items[i].FindControl("CabinPriceLabel") as Label).Text);
-                        Decimal Total = Convert.ToDecimal(PriceLabel.Text);
-                        Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + (String)Session["cabinDDL"] + "&total=" + Total);
+                        else
+                        {
+                            conn.Close();
+                            notification.Text = "Error: Cabin does not exist!";
+                            notification.ForeColor = System.Drawing.Color.Red;
+                        }
                     }
                     catch (Exception err)
                     {
-                        conn.Close();
+                        conn1.Close();
                         notification.Text = "Error: " + err.Message;
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
-
-
                     //Send(PassengerName, PassengerEmail);
                 }
-                conn.Close();
             }
             catch (Exception err)
             {

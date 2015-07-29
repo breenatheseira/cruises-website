@@ -70,7 +70,7 @@
                     Font-Names="Verdana" Font-Size="Small" GridLines="Both" RepeatColumns="4" RepeatDirection="Horizontal"
                     Width="100%">
                     <ItemStyle/>
-                    <ItemTemplate>
+                    <ItemTemplate>                        
                         <h3><asp:Label ID="CabinNameLabel" Text='<%# Eval("CabinName") %>' runat="server"></asp:Label></h3>
                         <table> 
                             <tr>

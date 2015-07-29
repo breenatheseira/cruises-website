@@ -1,11 +1,8 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Net;
-using System.Net.Mail;
-using SendGrid;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
@@ -31,7 +28,7 @@ namespace ddac
 
             if (!IsPostBack)
             {
-                itineraryID = (String)Request.Params.Get("ItineraryID");
+                String itineraryID = (String)Request.Params.Get("ItineraryID");
                 if (!string.IsNullOrEmpty(itineraryID))
                 {
                     ItineraryIDLabel.Text = itineraryID;
@@ -66,7 +63,9 @@ namespace ddac
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
                     jdlbind();
-                    Session["dateDDL"] = dateDDL.SelectedValue;
+                    DateTime date = Convert.ToDateTime(dateDDL.SelectedValue);
+                    String sqlDate = date.ToString("yyyy-MM-dd");
+                    Session["dateDDL"] = sqlDate;
                     cabinlbind();
                     clbind();
                 }
@@ -106,7 +105,7 @@ namespace ddac
 
         protected void jdlbind()
         {
-            sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " AND JourneyDate > GETDATE() ORDER BY JourneyDate ";
+            String sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " AND JourneyDate > GETDATE() ORDER BY JourneyDate ";
             try
             {
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -136,7 +135,7 @@ namespace ddac
 
         protected void cabinlbind()
         {
-            sql = "SELECT CabinID, CabinName FROM CABIN WHERE SHIPID = (SELECT ShipID FROM Itinerary WHERE ItineraryID = (SELECT ItineraryID FROM ItinerarySchedule WHERE ItineraryScheduleID = " +
+            String sql = "SELECT CabinID, CabinName FROM CABIN WHERE SHIPID = (SELECT ShipID FROM Itinerary WHERE ItineraryID = (SELECT ItineraryID FROM ItinerarySchedule WHERE ItineraryScheduleID = " +
                          "(SELECT ItineraryScheduleID FROM ItinerarySchedule WHERE JourneyDate = '" + (String)Session["dateDDL"] + "' AND ItineraryID = " + (String)Request.Params.Get("ItineraryID") + ")))";
             try
             {
@@ -158,8 +157,7 @@ namespace ddac
                 notification.Text = err.Message;
             }
         }
-
-        protected void cabinDDL_SelectedIndexChanged(object sender, EventArgs e)
+                protected void cabinDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             Session["cabinDDL"] = cabinDDL.SelectedValue;
         }

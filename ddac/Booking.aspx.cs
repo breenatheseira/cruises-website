@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Net;
+using System.Net.Mail;
+using SendGrid;
 using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data;
@@ -14,6 +17,8 @@ namespace ddac
     {
         public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
         int ShipID;
+        String sql;
+        String itineraryID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,7 +31,7 @@ namespace ddac
 
             if (!IsPostBack)
             {
-                String itineraryID = (String)Request.Params.Get("ItineraryID");
+                itineraryID = (String)Request.Params.Get("ItineraryID");
                 if (!string.IsNullOrEmpty(itineraryID))
                 {
                     ItineraryIDLabel.Text = itineraryID;
@@ -101,7 +106,7 @@ namespace ddac
 
         protected void jdlbind()
         {
-            String sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " AND JourneyDate > GETDATE() ORDER BY JourneyDate ";
+            sql = "SELECT JourneyDate FROM ItinerarySchedule WHERE ItineraryID = " + (String)Request.Params.Get("ItineraryID") + " AND JourneyDate > GETDATE() ORDER BY JourneyDate ";
             try
             {
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -131,7 +136,7 @@ namespace ddac
 
         protected void cabinlbind()
         {
-            String sql = "SELECT CabinID, CabinName FROM CABIN WHERE SHIPID = (SELECT ShipID FROM Itinerary WHERE ItineraryID = (SELECT ItineraryID FROM ItinerarySchedule WHERE ItineraryScheduleID = " +
+            sql = "SELECT CabinID, CabinName FROM CABIN WHERE SHIPID = (SELECT ShipID FROM Itinerary WHERE ItineraryID = (SELECT ItineraryID FROM ItinerarySchedule WHERE ItineraryScheduleID = " +
                          "(SELECT ItineraryScheduleID FROM ItinerarySchedule WHERE JourneyDate = '" + (String)Session["dateDDL"] + "' AND ItineraryID = " + (String)Request.Params.Get("ItineraryID") + ")))";
             try
             {
@@ -152,6 +157,97 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
+        }
+
+        protected void cabinDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["cabinDDL"] = cabinDDL.SelectedValue;
+        }
+
+        protected void BookButton_Click(object sender, EventArgs e)
+        {
+            String PassengerID = (String)Session["PassengerID"];
+            sql = "SELECT Name, Email FROM Passenger WHERE PassengerID = '" + PassengerID;
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    String PassengerName = rdr["Name"].ToString();
+                    String PassengerEmail = rdr["Email"].ToString();
+
+                    try
+                    {
+                        String sql1 = "INSERT INTO Booking ([PassengerID],[ItineraryScheduleID],[CabinID],[BookingDate],[BookingStatus],[PaymentStatus]) " +
+                                    "VALUES (@pass_id, dbo.fx_getItineraryScheduleID(@itid, @journeydate), @cabin_id, GETDATE(), 'B', 'N')";
+                        SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
+                        SqlCommand insertCommand = new SqlCommand(sql1, conn1);
+                        insertCommand.Parameters.AddWithValue("@pass_id", PassengerID);
+                        insertCommand.Parameters.AddWithValue("@itid", itineraryID);
+                        insertCommand.Parameters.AddWithValue("@journeydate", (String)Session["dateDDL"]);
+                        insertCommand.Parameters.AddWithValue("@cabin_id", (String)Session["cabinDDL"]);
+
+                        conn.Open();
+                        int BookingId = (int)cmd.ExecuteScalar();
+                        conn.Close();
+
+                        int i;
+                        for (i = 0; i < 4; i++)
+                        {
+                            if ((CabinList.Items[i].FindControl("CabinName") as Label).Text == (String)Session["cabinDDL"])
+                            {
+                                break;
+                            }
+                        }
+                        Decimal cPrice = Convert.ToDecimal((CabinList.Items[i].FindControl("CabinPriceLabel") as Label).Text);
+                        Decimal Total = Convert.ToDecimal(PriceLabel.Text);
+                        Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + (String)Session["cabinDDL"] + "&total=" + Total);
+                    }
+                    catch (Exception err)
+                    {
+                        conn.Close();
+                        notification.Text = "Error: " + err.Message;
+                        notification.ForeColor = System.Drawing.Color.Red;
+                    }
+
+
+                    //Send(PassengerName, PassengerEmail);
+                }
+                conn.Close();
+            }
+            catch (Exception err)
+            {
+                conn.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
+
+        }
+
+        public void Send(string ToName, string ToEmail)
+        {
+            // SendGrid credentials
+            var credentials = new NetworkCredential(
+                ConfigurationManager.AppSettings["emailServiceUserName"],
+                ConfigurationManager.AppSettings["emailServicePassword"]);
+
+
+            // Create the email object first, then add the properties.
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo(ToEmail);
+            myMessage.From = new MailAddress("Admin@carnivalcorporation.com", "Carnival Corporation");
+            myMessage.Subject = "Successful Purchase of Cruise Ticket. Booking #1";
+            myMessage.Text = "You have successfully purchased ... ticket to ..., which is scheduled to leave on .... Your BookingID is ...";
+            //myMessage.AddAttachment(@"https://ddac.blob.core.windows.net/itinerarydetails/ALASKA%20CRUISES%20FROM%20ANCHORAGE%20(WHITTIER).jpg");
+
+            // Create an Web transport for sending email, using credential
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            transportWeb.DeliverAsync(myMessage);
         }
     }
 }

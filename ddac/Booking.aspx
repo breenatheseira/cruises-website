@@ -100,7 +100,7 @@
         </div>
 		<div class="res_btn">
 			<form>
-                <input type="submit" value="book now" style="width: 280px;" class="btn btn-default">
+                <asp:Button ID="BookButton" runat="server" Text="Book Now" OnClick="BookButton_Click" CssClass="btn btn-default"/>
 			</form>
 		</div>
 	</div>
@@ -108,4 +108,3 @@
 </div>		
 <!--start main -->
 </asp:Content>
-

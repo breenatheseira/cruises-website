@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using SendGrid;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 
 namespace ddac
 {
@@ -42,7 +43,7 @@ namespace ddac
                         conn.Open();
                         SqlCommand cmd = new SqlCommand("SELECT I.*, ShipName FROM Itinerary I, Ship S WHERE I.ShipID = S.ShipID AND ItineraryID = '" + ItineraryIDLabel.Text + "'", conn);
                         SqlDataReader dr = cmd.ExecuteReader();
-    
+
                         if (dr.Read())
                         {
                             RegionLabel.Text = (String)dr["Region"];
@@ -58,7 +59,7 @@ namespace ddac
                             notification.Text = "ItineraryNo: #" + ItineraryIDLabel.Text + " values could not be found.";
                             notification.ForeColor = System.Drawing.Color.Red;
                         }
-                        conn.Close(); 
+                        conn.Close();
                     }
                     catch (Exception err)
                     {
@@ -76,7 +77,7 @@ namespace ddac
                 else
                 {
                     Response.Redirect("./Itinerary.aspx");
-                }               
+                }
             }
         }
 
@@ -130,13 +131,6 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
-        }
-        protected void dateDDL_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DateTime date = Convert.ToDateTime(dateDDL.SelectedValue);
-            String sqlDate = date.ToString("yyyy-MM-dd");
-            Session["dateDDL"] = sqlDate;
-            clbind();
         }
 
         protected void cabinlbind()
@@ -205,7 +199,7 @@ namespace ddac
                             cPrice = Convert.ToDecimal(dr["CabinPrice"].ToString());
                             Decimal Total = Convert.ToDecimal(PriceLabel.Text) + cPrice;
                             conn.Close();
-                            Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + cabinDDL.SelectedItem.ToString() + "&total=" + Total);
+                            Response.Redirect("./Payment.aspx?BookingID=" + BookingId);
                         }
                         else
                         {

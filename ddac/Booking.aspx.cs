@@ -205,7 +205,7 @@ namespace ddac
                             cPrice = Convert.ToDecimal(dr["CabinPrice"].ToString());
                             Decimal Total = Convert.ToDecimal(PriceLabel.Text) + cPrice;
                             conn.Close();
-                            Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + cabinDDL.SelectedValue.ToString() + "&total=" + Total);
+                            Response.Redirect("./Payment.aspx?bookingID=" + BookingId + "&item_name=" + RegionLabel.Text + "&cabin=" + cabinDDL.SelectedItem.ToString() + "&total=" + Total);
                         }
                         else
                         {
@@ -229,7 +229,6 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
-
         }
 
         public void Send(string ToName, string ToEmail)

@@ -56,7 +56,7 @@
 				<div class="span2_of_1">
 					<h4>Journey Date:</h4>
 					<div class="book_date btm">
-						<asp:DropDownList ID="dateDDL" runat="server" OnSelectedIndexChanged="dateDDL_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+						<asp:DropDownList ID="dateDDL" runat="server" AutoPostBack="true"></asp:DropDownList>
                     </div>
                 </div>
                 <div class="span2_of_1">

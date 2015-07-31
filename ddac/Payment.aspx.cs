@@ -14,6 +14,13 @@ namespace ddac
     public partial class Payment : System.Web.UI.Page
     {
         public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
+        String sql;
+        SqlCommand cmd;
+        SqlDataReader rdr;
+
+        String email = "breenatheseira-facilitator@yahoo.com";
+        String ReturnUrl = "https://google.com";
+        String CancelUrl = "https://youtube.com";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,19 +29,67 @@ namespace ddac
                 Response.Redirect("./Itinerary.aspx");
 
             String bookingID = (String)Request.Params["bookingID"];
+            LoadValues(bookingID);
 
-            String sql = "SELECT B.BookingID, B.PassengerID, B.BookingDate, P.Name, " +
+            if (!string.IsNullOrEmpty((String)Request.Params["PaymentStatus"]))
+            {
+                if ("P".Equals((String)Request.Params["PaymentStatus"])){
+                    UpdatePaymentStatus(bookingID);
+                    PayButton.Visible = false;
+                }
+                else if ("N".Equals((String)Request.Params["PaymentStatus"]))
+                {
+                    PayButton.Visible = true;
+                }
+            }
+        }
+
+        private String dateToString (DateTime date){
+            String sqlDate = date.ToString("dddd, MMMM d, yyyy");
+            return sqlDate;
+        }
+
+        protected void PayButton_Click(object sender, EventArgs e)
+        {
+            bool TestMode = true;
+            string url = TestMode ?
+               "https://www.sandbox.paypal.com/us/cgi-bin/webscr" :
+               "https://www.paypal.com/us/cgi-bin/webscr";
+
+            String booking = (String)Request.Params["BookingID"];
+            ReturnUrl += "?BookingID=" + booking + "&PaymentStatus=P";
+            CancelUrl += "?BookingID=" + booking + "&PaymentStatus=N";
+
+            String item_name = "BookingID: " + booking + " - Region: " + RegionLabel.Text + " using Cabin Type: " + CabinTypeLabel.Text;
+
+            var builder = new StringBuilder();
+            builder.Append(url);
+            builder.AppendFormat("?cmd=_xclick&business={0}", HttpUtility.UrlEncode(email));
+            builder.Append("&lc=US&no_note=0&currency_code=USD");
+            builder.AppendFormat("&item_name={0}", HttpUtility.UrlEncode(item_name));
+            builder.AppendFormat("&invoice={0}", booking);
+            builder.AppendFormat("&amount={0}", TotalPriceLabel.Text);
+            builder.AppendFormat("&return={0}", HttpUtility.UrlEncode(ReturnUrl));
+            builder.AppendFormat("&cancel_return={0}", HttpUtility.UrlEncode(CancelUrl));
+            builder.AppendFormat("&quantity={0}", 1);
+
+            Response.Redirect(builder.ToString());
+        }
+
+        protected void LoadValues(String bookingID)
+        {
+            sql = "SELECT B.BookingID, B.PassengerID, B.BookingDate, B.PaymentStatus, P.Name, " +
                          "I.ItineraryID, I.Region, I.ItineraryDetails, I.Source, I.Price, " +
                          "SI.JourneyDate, C.CabinName, C.CabinPrice, C.Capacity, " +
                          "S.ShipName, S.CruiseOperator FROM Booking B, Itinerary I, ItinerarySchedule SI, Cabin C, Ship S, Passenger P " +
                          "WHERE B.ItineraryScheduleID = SI.ItineraryScheduleID AND C.CabinID = B.CabinID AND P.PassengerID = B.PassengerID AND " +
                          "I.ItineraryID = SI.ItineraryID AND S.ShipID = C.ShipID AND I.ShipID = S.ShipID AND B.BookingID = " + bookingID;
 
-            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd = new SqlCommand(sql, conn);
             try
             {
                 conn.Open();
-                SqlDataReader rdr = cmd.ExecuteReader();
+                rdr = cmd.ExecuteReader();
 
                 if (rdr.Read())
                 {
@@ -54,9 +109,23 @@ namespace ddac
                     JDateLabel.Text = dateToString((DateTime)rdr["JourneyDate"]);
                     CabinTypeLabel.Text = (String)rdr["CabinName"];
                     CabinPriceLabel.Text = rdr["CabinPrice"].ToString();
-                    CabinCapacityLabel.Text = (String)rdr["Capacity"].ToString();
+                    CabinCapacityLabel.Text = rdr["Capacity"].ToString();
 
                     Decimal total = Convert.ToDecimal(CabinPriceLabel.Text) + Convert.ToDecimal(PriceLabel.Text);
+
+                    if ("P".Equals(rdr["PaymentStatus"].ToString()))
+                    {
+                        PaymentStatusLabel.Text = "Paid";
+                        PaymentStatusLabel.ForeColor = System.Drawing.Color.Green;
+                        HeadingLabel.Text = "Details of Booking #" + bookingID;
+                        PayButton.Visible = false;
+                    }
+                    else
+                    {
+                        PaymentStatusLabel.Text = "Payment Pending. Please pay $" + total.ToString() + " to confirm your booking.";
+                        PaymentStatusLabel.ForeColor = System.Drawing.Color.Red;
+                        HeadingLabel.Text = "Please Confirm Booking #" + bookingID + " :";
+                    }
                     TotalPriceLabel.Text = total.ToString();
                 }
                 conn.Close();
@@ -68,37 +137,24 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
             }
         }
-        private String dateToString (DateTime date){
-            String sqlDate = date.ToString("dddd, MMMM d, yyyy");
-            return sqlDate;
-        }
 
-        protected void PayButton_Click(object sender, EventArgs e)
+        protected void UpdatePaymentStatus(String bookingID)
         {
-            String email = "breenatheseira-facilitator@yahoo.com";
+            sql = "UPDATE Booking SET PaymentStatus = 'P' WHERE BookingID = " + bookingID;
+            cmd = new SqlCommand(sql, conn);
 
-            bool TestMode = true;
-            string url = TestMode ?
-               "https://www.sandbox.paypal.com/us/cgi-bin/webscr" :
-               "https://www.paypal.com/us/cgi-bin/webscr";
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            } catch (Exception err)
+            {
+                conn.Close();
+                notification.Text = "Error: " + err.Message;
+                notification.ForeColor = System.Drawing.Color.Red;
 
-            String ReturnUrl = "https://google.com";
-            String CancelUrl = "https://youtube.com";
-            String booking = (String)Request.Params["BookingID"];
-            String item_name = "BookingID: " + booking + " - Region: " + RegionLabel.Text + " using Cabin Type: " + CabinTypeLabel.Text;
-
-            var builder = new StringBuilder();
-            builder.Append(url);
-            builder.AppendFormat("?cmd=_xclick&business={0}", HttpUtility.UrlEncode(email));
-            builder.Append("&lc=US&no_note=0&currency_code=USD");
-            builder.AppendFormat("&item_name={0}", HttpUtility.UrlEncode(item_name));
-            builder.AppendFormat("&invoice={0}", booking);
-            builder.AppendFormat("&amount={0}", TotalPriceLabel.Text);
-            builder.AppendFormat("&return={0}", HttpUtility.UrlEncode(ReturnUrl));
-            builder.AppendFormat("&cancel_return={0}", HttpUtility.UrlEncode(CancelUrl));
-            builder.AppendFormat("&quantity={0}", 1);
-
-            Response.Redirect(builder.ToString());
+            }
         }
     }
 }

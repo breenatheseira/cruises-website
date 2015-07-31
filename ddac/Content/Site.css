@@ -194,7 +194,7 @@ body {
 	-o-box-shadow: 0px 0px 4px rgb(97, 97, 97);
 }
 .booking_room{
-	padding: 2%;
+	padding: 20px;
 	float: left;
 	width: 22.33333%;
 	background: #E4E4E4;
@@ -204,7 +204,7 @@ body {
 	color: #202020;
 	text-transform: capitalize;
 	font-weight: 600;
-	margin-bottom: 10px;
+	margin-bottom: 10px;    
 }
 .booking_room p{
 	font-size: 0.8725em;
@@ -213,10 +213,10 @@ body {
 }
 .reservation{
 	font-family: 'Open Sans', sans-serif;
-	padding: 2%;
+	padding: 20px;
 	float: left;
 	width: 100%;
-	background: #FFFFFF;
+	background: #FFFFFF;    
 }
 .reservation ul li{
 	float: left;

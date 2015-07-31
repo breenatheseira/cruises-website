@@ -145,7 +145,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Carnival Corporation</p>
+                <p style="text-align:center">&copy; <%: DateTime.Now.Year %> - Carnival Corporation</p>
             </footer>
         </div>
     </form>

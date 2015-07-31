@@ -95,7 +95,8 @@
                     </td>
                 </tr>               
             </table>
-                <asp:Button ID="PayButton" runat="server" Text="Pay with Paypal" OnClick="PayButton_Click" CssClass="btn btn-default"/>
+            <div class="res_btn">
+                <asp:Button ID="PayButton" runat="server" Text="Pay with Paypal" OnClick="PayButton_Click" CssClass="btn btn-primary btn-lg "/>
             </div>
         </div>
     </div>

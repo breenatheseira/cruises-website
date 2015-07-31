@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -44,7 +44,7 @@ namespace ddac
                 sql += ") IT LEFT JOIN (SELECT B.ItineraryScheduleID, SUM(TotalInShip) AS TotalInShip, SUM(TotalCabinBooked) AS TotalCabinBooked FROM (" +
                         "SELECT B.ItineraryScheduleID, C.TotalInShip, COUNT(B.CabinID) AS TotalCabinBooked FROM Booking B RIGHT JOIN Cabin C ON C.CabinID = B.CabinID " +
                         "GROUP BY B.ItineraryScheduleID, B.CabinID, C.TotalInShip) B GROUP BY B.ItineraryScheduleID, B.TotalInShip, B.TotalCabinBooked " +
-                        "HAVING B.TotalInShip > B.TotalCabinBooked) B ON B.ItineraryScheduleID = IT.ItineraryScheduleID";
+                        "HAVING B.TotalInShip > B.TotalCabinBooked) B ON B.ItineraryScheduleID = IT.ItineraryScheduleID ORDER BY IT.ItineraryID";
 
 				SqlCommand cmd = new SqlCommand(sql, conn);
 				conn.Open();

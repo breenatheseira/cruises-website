@@ -36,6 +36,8 @@ namespace ddac
                 if ("P".Equals((String)Request.Params["PaymentStatus"])){
                     UpdatePaymentStatus(bookingID);
                     PayButton.Visible = false;
+                    notification.Text = "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.";
+                    notification.ForeColor = System.Drawing.Color.Green;
                 }
                 else if ("N".Equals((String)Request.Params["PaymentStatus"]))
                 {

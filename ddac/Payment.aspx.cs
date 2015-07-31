@@ -19,8 +19,8 @@ namespace ddac
         SqlDataReader rdr;
 
         String email = "breenatheseira-facilitator@yahoo.com";
-        String ReturnUrl = "https://google.com";
-        String CancelUrl = "https://youtube.com";
+        String ReturnUrl = "https://google.com" + "?PaymentStatus=P";
+        String CancelUrl = "https://youtube.com" + "?PaymentStatus=N";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,6 +39,8 @@ namespace ddac
                 }
                 else if ("N".Equals((String)Request.Params["PaymentStatus"]))
                 {
+                    notification.Text = "Payment Failed. Please pay to confirm your booking to secure your room for the cruise.";
+                    notification.ForeColor = System.Drawing.Color.Red;
                     PayButton.Visible = true;
                 }
             }
@@ -57,8 +59,8 @@ namespace ddac
                "https://www.paypal.com/us/cgi-bin/webscr";
 
             String booking = (String)Request.Params["BookingID"];
-            ReturnUrl += "?BookingID=" + booking + "&PaymentStatus=P";
-            CancelUrl += "?BookingID=" + booking + "&PaymentStatus=N";
+            ReturnUrl += "&BookingID=" + booking;
+            CancelUrl += "&BookingID=" + booking;
 
             String item_name = "BookingID: " + booking + " - Region: " + RegionLabel.Text + " using Cabin Type: " + CabinTypeLabel.Text;
 

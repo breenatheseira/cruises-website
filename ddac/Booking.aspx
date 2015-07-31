@@ -100,7 +100,7 @@
         </div>
 		<div class="res_btn">
 			<form>
-                <asp:Button ID="BookButton" runat="server" Text="Book Now" OnClick="BookButton_Click" CssClass="btn btn-default"/>
+                <asp:Button ID="BookButton" runat="server" Text="Book Now" OnClick="BookButton_Click" CssClass="btn btn-primary btn-lg"/>
 			</form>
 		</div>
 	</div>

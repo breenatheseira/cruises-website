@@ -21,9 +21,9 @@
 	    <div class="main">
 		    <div class="res_online">
                 <p>
-                    <asp:Label ID="notification" runat="server"></asp:Label> 
+                    <asp:Label ID="notification" runat="server"/>
                 </p>
-                <h4>Please confirm your booking:</h4>
+                <h4><asp:Label ID="HeadingLabel" runat="server"/></h4>
             <table class="table">
                 <tr>
                     <td class="auto-style2">
@@ -86,6 +86,10 @@
                             <tr>
                                <td class="auto-style4">Total Price : </td>
                                <td class="auto-style3">$ <asp:Label ID="TotalPriceLabel" runat="server" ></asp:Label></td>
+                            </tr>
+                            <tr>
+                               <td class="auto-style4">Payment Status : </td>
+                               <td class="auto-style3"><asp:Label ID="PaymentStatusLabel" runat="server" Font-Bold="true"></asp:Label></td>
                             </tr>
                         </table>
                     </td>

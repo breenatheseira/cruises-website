@@ -22,6 +22,15 @@ namespace ddac {
         protected global::System.Web.UI.WebControls.Label notification;
         
         /// <summary>
+        /// HeadingLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label HeadingLabel;
+        
+        /// <summary>
         /// ImageButton1 control.
         /// </summary>
         /// <remarks>
@@ -155,6 +164,15 @@ namespace ddac {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TotalPriceLabel;
+        
+        /// <summary>
+        /// PaymentStatusLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PaymentStatusLabel;
         
         /// <summary>
         /// PayButton control.

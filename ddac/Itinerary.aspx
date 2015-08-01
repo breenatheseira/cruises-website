@@ -1,9 +1,8 @@
-﻿﻿<%@ Page enableEventValidation="False" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Itinerary.aspx.cs" Inherits="ddac.Itinerary" %>
+﻿<%@ Page enableEventValidation="False" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Itinerary.aspx.cs" Inherits="ddac.Itinerary" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
     <script type="text/javascript">
 		$(document).ready(function() {
-		    $("#fDate,#tDate").datepicker();
-		    $(".DataListItem").width($("#MyDataList").width()/4); // Set the column width
+		    $("#fDate,#tDate").datepicker();		    
 		});
 	</script>
 
@@ -47,6 +46,12 @@
             }
         }
     </script>
+    <style type="text/css">
+        .Text_Align{
+            text-align: center;
+            padding-top: 10px;            
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
     <!--start main -->
@@ -68,7 +73,8 @@
 					    <div class="section_room">
                             <asp:DropDownList ID="RegionDropDown" runat="server" DataSourceID="ItineraryCode" DataTextField="Region" AppendDataBoundItems="true" DataValueField="Region" class="frm-field required">
                                 <asp:ListItem Text="All Cruises" Value="" Selected="True"/>
-                            </asp:DropDownList>                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
+                            </asp:DropDownList>                            
+                            <asp:SqlDataSource ID="ItineraryCode" runat="server" ConnectionString="<%$ ConnectionStrings:DDACConnection %>" SelectCommand="SELECT Distinct Region FROM [Itinerary] "></asp:SqlDataSource>
 					    </div>	
 				    </li>
 				    <li  class="span1_of_1 left">
@@ -109,61 +115,58 @@
         <p>
             <asp:Label ID="notification" runat="server"></asp:Label> 
         </p>
-        <asp:DataList ID="ItineraryList" runat="server" BorderStyle="None" ClientIDMode="Static" Font-Names="Verdana" Font-Size="Small" GridLines="Both" 
-            RepeatColumns="4" RepeatDirection="Horizontal" Width="100%" ItemStyle-HorizontalAlign="Left">
+        <asp:DataList ID="ItineraryList" runat="server" BorderStyle="None" Font-Names="Verdana" Font-Size="Small" GridLines="Both" ItemStyle-CssClass="Text_Align"
+            RepeatColumns="4" RepeatDirection="Horizontal" Width="100%" ItemStyle-HorizontalAlign="Center" RepeatLayout="Table" >
         <ItemStyle />
         <ItemTemplate>
-            <div class="DataListItem" >
-                <table> 
-                    <tr>
-                        <td colspan="2" style="margin:10px"><asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("ItineraryDetails") %>' Width="220px" 
-                            Style="cursor: pointer" OnClientClick="return LoadDiv(this.src);" /></td>
-                    </tr>
-                    <tr>
-                        <td>ID: </td>
-                        <td>
-                            <h3><asp:Label ID="ItineraryIDLabel" Text='<%# Eval("ItineraryID") %>' runat="server"></asp:Label></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Region: </td>
-                        <td>
-                            <asp:Label ID="RegionLabel" Text='<%# Eval("Region") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Source: </td>
-                        <td>
-                            <asp:Label ID="SourceLabel" Text='<%# Eval("Source") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Price: </td>
-                        <td>
-                            <asp:Label ID="PriceLabel" Text='<%# Eval("Price") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ship: </td>
-                        <td>
-                            <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipName") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-					<tr>
-                        <td>Journey Date: </td>
-                        <td>
-                            <asp:Label ID="JourneyDateLabel" Text='<%# Eval("JourneyDate") %>' runat="server"></asp:Label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align:center">
-                            <h4><a href="Booking.aspx?ItineraryID=<%# Eval("ItineraryID") %>" class="btn btn-primary">Book now</a></h4>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </ItemTemplate>
-        <SeparatorTemplate><div style="margin:100px"></div></SeparatorTemplate>
+            <table> 
+                <tr>
+                    <td colspan="2" style="margin:10px"><asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("ItineraryDetails") %>' Width="210px" 
+                        Style="cursor: pointer" OnClientClick="return LoadDiv(this.src);" /></td>
+                </tr>
+                <tr>
+                    <td>ID: </td>
+                    <td>
+                        <h3><asp:Label ID="ItineraryIDLabel" Text='<%# Eval("ItineraryID") %>' runat="server"></asp:Label></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Region: </td>
+                    <td>
+                        <asp:Label ID="RegionLabel" Text='<%# Eval("Region") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Source: </td>
+                    <td>
+                        <asp:Label ID="SourceLabel" Text='<%# Eval("Source") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price: </td>
+                    <td>
+                        <asp:Label ID="PriceLabel" Text='<%# Eval("Price") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Ship: </td>
+                    <td>
+                        <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipName") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
+				<tr>
+                    <td>Journey Date: </td>
+                    <td>
+                        <asp:Label ID="JourneyDateLabel" Text='<%# Eval("JourneyDate") %>' runat="server"></asp:Label>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center">
+                        <h4><a href="Booking.aspx?ItineraryID=<%# Eval("ItineraryID") %>" class="btn btn-primary">Book now</a></h4>
+                    </td>
+                </tr>
+            </table>
+        </ItemTemplate>        
         <SelectedItemStyle Font-Bold="True" ForeColor="White" />
     </asp:DataList>
     </div>

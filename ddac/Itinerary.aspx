@@ -62,9 +62,6 @@
         <!--start main -->
 	    <div class="online_reservation">
 	    <div class="b_room">
-		    <div class="booking_room">
-			    <h4>Find Your Perfect Cruise</h4>
-		    </div>
 		    <div class="reservation">
 			    <ul>
 				    <li class="span1_of_1">
@@ -104,11 +101,13 @@
 		        		    </select>
 					    </div>					
 				    </li>
+                    <li style="padding-left:14px;padding-top:27px">
+                        <asp:LinkButton ID="SearchButton" runat="server" OnClick="SearchButton_Click" CssClass="btn btn-primary btn-lg">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </asp:LinkButton>
+                    </li>
 				    <div class="clear"></div>
 			    </ul>
-                <div class="date_btn">
-                    <asp:Button ID="SearchButton" runat="server" Text="Search Itinerary" OnClick="SearchButton_Click" CssClass="btn btn-default"/>
-                </div>
 		    </div>
 		    <div class="clear"></div>
 		    </div>

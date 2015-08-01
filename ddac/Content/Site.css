@@ -183,7 +183,7 @@ body {
 /* start booking_room */
 .online_reservation{
 	position: relative;
-	margin-top: -75px;
+	margin-top: -45px;
 	z-index: 999;
 }
 .b_room{    
@@ -192,6 +192,8 @@ body {
 	-webkit-box-shadow: 0px 0px 4px rgb(97, 97, 97);
 	-moz-box-shadow: 0px 0px 4px rgb(97, 97, 97);
 	-o-box-shadow: 0px 0px 4px rgb(97, 97, 97);
+    width: 840px;
+    margin-left: 15px;
 }
 .booking_room{
 	padding: 20px;

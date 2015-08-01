@@ -66,6 +66,7 @@
 			    <h4>Find Your Perfect Cruise</h4>
 		    </div>
 		    <div class="reservation">
+                <h3 style="padding:10px 0px 20px 0px;font-size:large">Enter the fields below to find itineraries:</h3>
 			    <ul>
 				    <li class="span1_of_1">
 					    <h5>Region:</h5>

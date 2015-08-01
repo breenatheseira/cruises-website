@@ -19,8 +19,8 @@ namespace ddac
         SqlDataReader rdr;
 
         String email = "breenatheseira-facilitator@yahoo.com";
-        String ReturnUrl = "https://google.com" + "?PaymentStatus=P";
-        String CancelUrl = "https://youtube.com" + "?PaymentStatus=N";
+        String ReturnUrl = "https://google.com";
+        String CancelUrl = "https://youtube.com";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,21 +31,37 @@ namespace ddac
             String bookingID = (String)Request.Params["bookingID"];
             LoadValues(bookingID);
 
-            if (!string.IsNullOrEmpty((String)Request.Params["PaymentStatus"]))
+            if (!string.IsNullOrEmpty((String)Request.Params["tx"]))
             {
-                if ("P".Equals((String)Request.Params["PaymentStatus"])){
-                    UpdatePaymentStatus(bookingID);
-                    PayButton.Visible = false;
-                    notification.Text = "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.";
-                    notification.ForeColor = System.Drawing.Color.Green;
-                }
-                else if ("N".Equals((String)Request.Params["PaymentStatus"]))
+                if (!string.IsNullOrEmpty((String)Request.Params["st"]))
                 {
-                    notification.Text = "Payment Failed. Please pay to confirm your booking to secure your room for the cruise.";
-                    notification.ForeColor = System.Drawing.Color.Red;
-                    PayButton.Visible = true;
+                    if ("Completed".Equals((String)Request.Params["st"]))
+                    {
+                        Session["CancelledBooking"] = "";
+                        UpdatePaymentStatus(bookingID);
+                        PayButton.Visible = false;
+                        notification.Text = "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.";
+                        notification.ForeColor = System.Drawing.Color.Green;
+                    }
+                    else
+                    {
+                        Session["CancelledBooking"] = "";
+                        paymentFailed();
+                    }
                 }
             }
+            if (bookingID.ToString().Equals((String)Session["CancelledBooking"]))
+            {
+                Session["CancelledBooking"] = "";
+                paymentFailed();
+            }
+        }
+
+        private void paymentFailed()
+        {
+            notification.Text = "Payment Failed. Please try again to confirm your booking to secure your room for the cruise.";
+            notification.ForeColor = System.Drawing.Color.Red;
+            PayButton.Visible = true;
         }
 
         private String dateToString (DateTime date){
@@ -61,8 +77,6 @@ namespace ddac
                "https://www.paypal.com/us/cgi-bin/webscr";
 
             String booking = (String)Request.Params["BookingID"];
-            ReturnUrl += "&BookingID=" + booking;
-            CancelUrl += "&BookingID=" + booking;
 
             String item_name = "BookingID: " + booking + " - Region: " + RegionLabel.Text + " using Cabin Type: " + CabinTypeLabel.Text;
 
@@ -74,8 +88,11 @@ namespace ddac
             builder.AppendFormat("&invoice={0}", booking);
             builder.AppendFormat("&amount={0}", TotalPriceLabel.Text);
             builder.AppendFormat("&return={0}", HttpUtility.UrlEncode(ReturnUrl));
-            builder.AppendFormat("&cancel_return={0}", HttpUtility.UrlEncode(CancelUrl));
+            builder.AppendFormat("&custom={0}", booking);
+            builder.AppendFormat("&cancel_return={0}", CancelUrl);
             builder.AppendFormat("&quantity={0}", 1);
+
+            Session["CancelledBooking"] = booking;
 
             Response.Redirect(builder.ToString());
         }

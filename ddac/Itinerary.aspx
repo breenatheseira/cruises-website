@@ -111,12 +111,12 @@
         </p>
         <asp:DataList ID="ItineraryList" runat="server" BorderStyle="None" ClientIDMode="Static" Font-Names="Verdana" Font-Size="Small" GridLines="Both" 
             RepeatColumns="4" RepeatDirection="Horizontal" Width="100%" ItemStyle-HorizontalAlign="Left">
-        <ItemStyle/>
+        <ItemStyle />
         <ItemTemplate>
-            <div class="DataListItem">
+            <div class="DataListItem" >
                 <table> 
                     <tr>
-                        <td colspan="2"><asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("ItineraryDetails") %>' Width="220px" 
+                        <td colspan="2" style="margin:10px"><asp:ImageButton ID="ImageButton1" runat="server" ImageUrl='<%# Eval("ItineraryDetails") %>' Width="220px" 
                             Style="cursor: pointer" OnClientClick="return LoadDiv(this.src);" /></td>
                     </tr>
                     <tr>
@@ -148,19 +148,22 @@
                         <td>
                             <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipName") %>' runat="server"></asp:Label>
                         </td>
-					    <tr>
+                    </tr>
+					<tr>
                         <td>Journey Date: </td>
                         <td>
                             <asp:Label ID="JourneyDateLabel" Text='<%# Eval("JourneyDate") %>' runat="server"></asp:Label>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center">
+                            <h4><a href="Booking.aspx?ItineraryID=<%# Eval("ItineraryID") %>" class="btn btn-primary">Book now</a></h4>
+                        </td>
                     </tr>
                 </table>
-                <div style="text-align:center">
-                    <h4><a href="Booking.aspx?ItineraryID=<%# Eval("ItineraryID") %>" class="btn btn-primary">Book now</a></h4>
-                </div>
             </div>
         </ItemTemplate>
+        <SeparatorTemplate><div style="margin:100px"></div></SeparatorTemplate>
         <SelectedItemStyle Font-Bold="True" ForeColor="White" />
     </asp:DataList>
     </div>

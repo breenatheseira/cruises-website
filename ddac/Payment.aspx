@@ -20,8 +20,8 @@
     <div class="wrap">
 	    <div class="main">
 		    <div class="res_online">
-                <p>
-                    <asp:Label ID="notification" runat="server"/>
+                <p style="margin-bottom:20px">
+                    <asp:Label ID="notification" runat="server" />
                 </p>
                 <h4><asp:Label ID="HeadingLabel" runat="server"/></h4>
             <table class="table">

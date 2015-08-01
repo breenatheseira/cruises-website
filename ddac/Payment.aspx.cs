@@ -19,8 +19,8 @@ namespace ddac
         SqlDataReader rdr;
 
         String email = "breenatheseira-facilitator@yahoo.com";
-        String ReturnUrl = "http://carnivalcruise.azurewebsites.net";
-        String CancelUrl = "http://carnivalcruise.azurewebsites.net";
+        String ReturnUrl = "http://carnivalcruise.azurewebsites.net/Payment.aspx";
+        String CancelUrl = "http://carnivalcruise.azurewebsites.net/Payment.aspx";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -42,6 +42,7 @@ namespace ddac
                         PayButton.Visible = false;
                         notification.Text = "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.";
                         notification.ForeColor = System.Drawing.Color.Green;
+                        setPaymentStatusLabel((String)Request.Params["PaymentStatus"], (String)Request.Params["amt"], bookingID);
                     }
                     else
                     {
@@ -54,7 +55,7 @@ namespace ddac
             {
                 Session["CancelledBooking"] = "";
                 paymentFailed();
-            }
+            }            
         }
 
         private void paymentFailed()
@@ -79,6 +80,8 @@ namespace ddac
             String booking = (String)Request.Params["BookingID"];
 
             String item_name = "BookingID: " + booking + " - Region: " + RegionLabel.Text + " using Cabin Type: " + CabinTypeLabel.Text;
+            CancelUrl += "?BookingID=" + booking;
+            ReturnUrl += "?BookingID=" + booking + "&PaymentStatus=P";
 
             var builder = new StringBuilder();
             builder.Append(url);
@@ -134,19 +137,8 @@ namespace ddac
 
                     Decimal total = Convert.ToDecimal(CabinPriceLabel.Text) + Convert.ToDecimal(PriceLabel.Text);
 
-                    if ("P".Equals(rdr["PaymentStatus"].ToString()))
-                    {
-                        PaymentStatusLabel.Text = "Paid";
-                        PaymentStatusLabel.ForeColor = System.Drawing.Color.Green;
-                        HeadingLabel.Text = "Details of Booking #" + bookingID;
-                        PayButton.Visible = false;
-                    }
-                    else
-                    {
-                        PaymentStatusLabel.Text = "Payment Pending. Please pay $" + total.ToString() + " to confirm your booking.";
-                        PaymentStatusLabel.ForeColor = System.Drawing.Color.Red;
-                        HeadingLabel.Text = "Please Confirm Booking #" + bookingID + " :";
-                    }
+                    setPaymentStatusLabel(rdr["PaymentStatus"].ToString(), total.ToString(), bookingID);
+
                     TotalPriceLabel.Text = total.ToString();
                 }
                 conn.Close();
@@ -175,6 +167,23 @@ namespace ddac
                 notification.Text = "Error: " + err.Message;
                 notification.ForeColor = System.Drawing.Color.Red;
 
+            }
+        }
+
+        private void setPaymentStatusLabel(String status, String total, String bookingID)
+        {
+            if ("P".Equals(status))
+            {
+                PaymentStatusLabel.Text = "Paid";
+                PaymentStatusLabel.ForeColor = System.Drawing.Color.Green;
+                HeadingLabel.Text = "Details of Booking #" + bookingID;
+                PayButton.Visible = false;
+            }
+            else
+            {
+                PaymentStatusLabel.Text = "Payment Pending. Please pay $" + total + " to confirm your booking.";
+                PaymentStatusLabel.ForeColor = System.Drawing.Color.Red;
+                HeadingLabel.Text = "Please Confirm Booking #" + bookingID + " :";
             }
         }
     }

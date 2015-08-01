@@ -19,8 +19,8 @@ namespace ddac
         SqlDataReader rdr;
 
         String email = "breenatheseira-facilitator@yahoo.com";
-        String ReturnUrl = "https://google.com";
-        String CancelUrl = "https://youtube.com";
+        String ReturnUrl = "http://carnivalcruise.azurewebsites.net";
+        String CancelUrl = "http://carnivalcruise.azurewebsites.net";
 
         protected void Page_Load(object sender, EventArgs e)
         {

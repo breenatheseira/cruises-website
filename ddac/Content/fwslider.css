@@ -5,12 +5,9 @@
 }
 
 #fwslider .slide {
-    display: none;
     position: absolute;
-    top:0;
-    left:0;
     z-index: 0;
-    width:100%;
+    width:1140px;
 }
 
 #fwslider .slide img {
@@ -18,11 +15,10 @@
 }
 
 #fwslider .slidePrev {
-    position: absolute;
-    top:50%;
-    left:-50px;
-    
-    z-index: 10;
+    position: relative;
+    top:29%;
+    left:-20px;
+    z-index: 1;
 }
 #fwslider .slidePrev span {
 	background-image: url("../images/sliderarrows.png");
@@ -34,22 +30,23 @@
 	cursor: pointer;
 }
 #fwslider .slideNext {
-    position: absolute;
-    top:50%;
-    right:-50px;
+    position: relative;
+    top:29%;
+    right:-20px;
     z-index: 10;
 }
 #fwslider .slideNext span {
  	 background-image: url("../images/sliderarrows.png");
 	width: 60px;
 	height: 60px;
-	float: left;
+	float: right;
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
 
 #fwslider .timers {
+    display:none;
     height:4px;
     position: absolute;
     bottom:15px;

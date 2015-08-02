@@ -117,7 +117,7 @@
             <asp:Label ID="notification" runat="server"></asp:Label> 
         </p>
         <asp:DataList ID="ItineraryList" runat="server" BorderStyle="None" Font-Names="Verdana" Font-Size="Small" GridLines="Both" ItemStyle-CssClass="Text_Align"
-            RepeatColumns="4" RepeatDirection="Horizontal" Width="100%" ItemStyle-HorizontalAlign="Center" RepeatLayout="Table" >
+            RepeatColumns="4" RepeatDirection="Horizontal" Width="100%" ItemStyle-HorizontalAlign="Center" RepeatLayout="Table">
         <ItemStyle />
         <ItemTemplate>
             <table> 
@@ -152,14 +152,16 @@
                 <tr>
                     <td>Ship: </td>
                     <td>
-                        <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipName") %>' runat="server"></asp:Label>
+                        <asp:Label ID="ShipNameLabel" Text='<%# Eval("ShipID") %>' runat="server"></asp:Label>
                     </td>
                 </tr>
 				<tr>
                     <td>Journey Date: </td>
-                    <td>
-                        <asp:Label ID="JourneyDateLabel" Text='<%# Eval("JourneyDate") %>' runat="server"></asp:Label>
-                    </td>
+                    <asp:Repeater ID="JourneyDateList" runat="server" DataSource='<%# GetJourneyDate((int)(Eval("ItineraryID"))) %>'>    
+                    <ItemTemplate>
+                        <asp:Label ID="JourneyDateLabel" runat="server" Text='<%#Eval("JD") %>'/>
+                    </ItemTemplate>
+                    </asp:Repeater>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align:center">

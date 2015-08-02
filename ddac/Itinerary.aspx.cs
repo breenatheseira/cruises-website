@@ -13,7 +13,7 @@ namespace ddac
     public partial class Itinerary : System.Web.UI.Page
     {
         public SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
-
+        public SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -29,10 +29,10 @@ namespace ddac
 				if (Session["price"] == null)
 					Session["price"] = (Int32)1000000;
 
-				String ITcolumns = "IT.ItineraryDetails, IT.ItineraryID, IT.Region, IT.Source, IT.Price, IT.ItineraryScheduleID, IT.JourneyDate, dbo.fx_getShipName(IT.ShipID) AS ShipName";
-				String Icolumns = "I.ItineraryDetails, I.ItineraryID, I.Region, I.Source, I.Price, ID.ItineraryScheduleID, ID.JourneyDate, I.ShipID ";
-				String sql = "SELECT DISTINCT " + ITcolumns + " FROM (SELECT " + Icolumns + " FROM Itinerary I LEFT JOIN ItinerarySchedule ID " +
-                    "ON I.ItineraryID = ID.ItineraryID WHERE Price < " + (Int32)Session["price"] + " AND JourneyDate > GETDATE() ";
+                String ITcolumns = "I.ItineraryDetails, I.ItineraryID, I.Region, I.Source, I.Price, I.ShipID ";
+				//String Icolumns = "I.ItineraryDetails, I.ItineraryID, I.Region, I.Source, I.Price, ID.ItineraryScheduleID, ID.JourneyDate, I.ShipID ";
+                String sql = "SELECT DISTINCT " + ITcolumns + " FROM Itinerary I, ItinerarySchedule ID " +
+                    "WHERE I.ItineraryID = ID.ItineraryID AND I.Price < " + (Int32)Session["price"] + " AND JourneyDate > GETDATE() ";
 
 				if (!string.IsNullOrEmpty((String)Session["region"]))
                     sql += "AND Region = '" + (String)Session["region"] + "' ";
@@ -41,10 +41,10 @@ namespace ddac
                     sql += "AND JourneyDate BETWEEN '" + (String)Session["dateFrom"] + "' AND '" +
                         (String)Session["dateTo"] + "'";
 
-                sql += ") IT LEFT JOIN (SELECT B.ItineraryScheduleID, SUM(TotalInShip) AS TotalInShip, SUM(TotalCabinBooked) AS TotalCabinBooked FROM (" +
-                        "SELECT B.ItineraryScheduleID, C.TotalInShip, COUNT(B.CabinID) AS TotalCabinBooked FROM Booking B RIGHT JOIN Cabin C ON C.CabinID = B.CabinID " +
-                        "GROUP BY B.ItineraryScheduleID, B.CabinID, C.TotalInShip) B GROUP BY B.ItineraryScheduleID, B.TotalInShip, B.TotalCabinBooked " +
-                        "HAVING B.TotalInShip > B.TotalCabinBooked) B ON B.ItineraryScheduleID = IT.ItineraryScheduleID ORDER BY IT.ItineraryID";
+                sql += " AND ID.ItineraryScheduleID IN " +
+                        "(SELECT R.ItineraryScheduleID FROM (SELECT B.ItineraryScheduleID, SUM(TotalInShip) - SUM(TotalCabinBooked) AS TotalCabinRemaining FROM (" +
+                        " SELECT B.ItineraryScheduleID, C.TotalInShip, COUNT(B.CabinID) AS TotalCabinBooked FROM Booking B RIGHT JOIN Cabin C ON C.CabinID = B.CabinID" +
+                        " GROUP BY B.ItineraryScheduleID, B.CabinID, C.TotalInShip) B GROUP BY B.ItineraryScheduleID) R WHERE R.TotalCabinRemaining > 0) ORDER BY I.ItineraryID";
 
 				SqlCommand cmd = new SqlCommand(sql, conn);
 				conn.Open();
@@ -61,6 +61,34 @@ namespace ddac
                 notification.ForeColor = System.Drawing.Color.Red;
                 notification.Text = err.Message;
             }
+        }
+
+        protected DataTable GetJourneyDate(int itid)
+        {
+            DataTable DT = default(DataTable);
+            try
+            {
+                String sqlString = "SELECT ID.JourneyDate AS JD FROM ItinerarySchedule ID INNER JOIN " +
+                    "(SELECT R.ItineraryScheduleID FROM (SELECT B.ItineraryScheduleID, SUM(TotalInShip) - SUM(TotalCabinBooked) AS TotalCabinRemaining FROM ( " +
+                    "SELECT B.ItineraryScheduleID, C.TotalInShip, COUNT(B.CabinID) AS TotalCabinBooked FROM Booking B RIGHT JOIN Cabin C ON C.CabinID = B.CabinID " +
+                    "GROUP BY B.ItineraryScheduleID, B.CabinID, C.TotalInShip) B GROUP BY B.ItineraryScheduleID) R WHERE R.TotalCabinRemaining > 0) Q " +
+                    "ON ID.ItineraryScheduleID = Q.ItineraryScheduleID WHERE ID.ItineraryID = " + itid + " ORDER BY ID.JourneyDate";
+
+                SqlCommand cmd1 = new SqlCommand(sqlString, conn1);
+                conn1.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd1);
+                DataSet ds = new DataSet();
+                da.Fill(ds, "Results");
+                DT = ds.Tables["Results"];
+                conn1.Close();
+            }
+            catch (Exception err)
+            {
+                conn1.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
+            return DT;
         }
 
         protected void SearchButton_Click(object sender, EventArgs e)
@@ -83,5 +111,6 @@ namespace ddac
             Session["dateFrom"] = fromDateFormat;
             ilbind();
         }
+
     }
 }

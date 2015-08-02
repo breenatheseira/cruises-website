@@ -11,6 +11,7 @@ using SendGrid;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.IO;
 
 namespace ddac
 {
@@ -20,7 +21,6 @@ namespace ddac
         SqlConnection conn1 = new SqlConnection(ConfigurationManager.ConnectionStrings["DDACConnection"].ConnectionString);
         int ShipID;
         String sql;
-        String itineraryID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -170,7 +170,7 @@ namespace ddac
 
                 if (rdr.Read())
                 {
-                    String PassengerName = rdr["Name"].ToString();
+                    Session["PassengerName"] = rdr["Name"].ToString();
                     String PassengerEmail = rdr["Email"].ToString();
                     String dateDLL = (String)Session["dateDDL"];
                     conn.Close();
@@ -199,7 +199,7 @@ namespace ddac
                             cPrice = Convert.ToDecimal(dr["CabinPrice"].ToString());
                             Decimal Total = Convert.ToDecimal(PriceLabel.Text) + cPrice;
                             conn.Close();
-                            Response.Redirect("./Payment.aspx?BookingID=" + BookingId);
+                            //Response.Redirect("./Payment.aspx?BookingID=" + BookingId);
                         }
                         else
                         {
@@ -214,7 +214,7 @@ namespace ddac
                         notification.Text = "Error: " + err.Message;
                         notification.ForeColor = System.Drawing.Color.Red;
                     }
-                    //Send(PassengerName, PassengerEmail);
+                    Send((String)Session["PassengerName"], PassengerEmail);
                 }
             }
             catch (Exception err)
@@ -227,6 +227,31 @@ namespace ddac
 
         public void Send(string ToName, string ToEmail)
         {
+
+            String PassengerID = (String)Session["PassengerID"];
+            sql = "SELECT Name, Email FROM Passenger WHERE PassengerID = '" + PassengerID + "'";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    String PassengerName = rdr["Name"].ToString();
+                    String PassengerEmail = rdr["Email"].ToString();
+                    String dateDLL = (String)Session["dateDDL"];
+                    conn.Close();
+                }
+            }
+            catch (Exception err)
+            {
+                conn.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
+
+
             // SendGrid credentials
             var credentials = new NetworkCredential(
                 ConfigurationManager.AppSettings["emailServiceUserName"],
@@ -235,11 +260,60 @@ namespace ddac
 
             // Create the email object first, then add the properties.
             SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo(ToEmail);
+            myMessage.AddTo("gtee@hotmail.my");
             myMessage.From = new MailAddress("Admin@carnivalcorporation.com", "Carnival Corporation");
             myMessage.Subject = "Successful Purchase of Cruise Ticket. Booking #1";
-            myMessage.Text = "You have successfully purchased ... ticket to ..., which is scheduled to leave on .... Your BookingID is ...";
-            //myMessage.AddAttachment(@"https://ddac.blob.core.windows.net/itinerarydetails/ALASKA%20CRUISES%20FROM%20ANCHORAGE%20(WHITTIER).jpg");
+            myMessage.Html = "<h1>Acknowledgement of Booking # Ticket Purchase</h1>" +
+                                        "<p>You have successfully booked your cruise with the following details:</p>" +
+                                        "	<ul>" +
+                                        "		<li>" +
+                                        "		  Passenger:" + (String)Session["PassengerName"] +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  BookingID:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  ItineraryID:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Cabin Type:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Region:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Source:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Ship Name:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Journey Date:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Total Price:" +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Payment Date:" +
+                                        "		</li>" +
+                                        "	</ul>" +
+                                        "	</br>" +
+                                        "<p>Thank you for booking your cruise with Carnival Corporation.</p>" +
+                                        "<p>Enjoy your cruise!</p>" +
+                                        "</br>" +
+                                        "<p>Best Regards,</p>" +
+                                        "<p>Carnival Corporation</p>";
+           
+            //Dictionary<string, MemoryStream> picAttactment = new Dictionary<string, MemoryStream>();
+            //WebClient webClient = new WebClient();
+            //Stream stream = webClient.OpenRead(@"https://ddac.blob.core.windows.net/itinerarydetails/ALASKA%20CRUISES%20FROM%20ANCHORAGE%20(WHITTIER).jpg");
+            //MemoryStream memoryStream = new MemoryStream();
+
+
+            //stream.CopyTo(memoryStream);
+            //picAttactment.Add("BookingDetails", memoryStream);
+            //myMessage.StreamedAttachments = picAttactment;
+
 
             // Create an Web transport for sending email, using credential
             var transportWeb = new Web(credentials);

@@ -106,35 +106,25 @@
 	    </div>
 	    <!--start grids_of_3 -->
 	    <div class="grids_of_3">
-		    <div class="grid1_of_3">
-			    <div class="grid1_of_3_img">
-				    <a href="details.html">
-					    <img src="Images/pic2.jpg" alt="" />
-					    <span class="next"> </span>
-				    </a>
-			    </div>
-			    <h4><a href="#">single room<span>120$</span></a></h4>
-			    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+		    <div class="col-md-3">
+				<img src="https://ddac.blob.core.windows.net/itinerarydetails/Cabin/interier.jpg" alt="Interior Room" />
+			    <h4>Interior Room<span>(2A)</span></h4>
+			    <p>Interior room, hidden within the ship; excludes a sense of privacy.</p>
 		    </div>
-		    <div class="grid1_of_3">
-			    <div class="grid1_of_3_img">
-				    <a href="details.html">
-					    <img src="Images/pic1.jpg" alt="" />
-					    <span class="next"> </span>
-				    </a>
-			    </div>
-			    <h4><a href="#">double room<span>180$</span></a></h4>
-			    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <div class="col-md-3">
+				<img src="https://ddac.blob.core.windows.net/itinerarydetails/Cabin/oceanview.jpg" alt="Oceanview Room" />
+			    <h4>Oceanview Room<span>(4A)</span></h4>
+			    <p>Oceanview room, get a glimpse of the ocean through specially patented windows.</p>
 		    </div>
-		    <div class="grid1_of_3">
-			    <div class="grid1_of_3_img">
-				    <a href="details.html">
-					    <img src="Images/pic3.jpg" alt="" />
-					    <span class="next"> </span>
-				    </a>
-			    </div>
-			    <h4><a href="#">suite room<span>210$</span></a></h4>
-			    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+            <div class="col-md-3">
+				<img src="https://ddac.blob.core.windows.net/itinerarydetails/Cabin/balcony.jpg" alt="Balcony Room" />
+			    <h4>Balcony Room<span>(4A)</span></h4>
+			    <p>Balcony room, head out to get that fresh air of the ocean.</p>
+		    </div>
+            <div class="col-md-3">
+				<img src="https://ddac.blob.core.windows.net/itinerarydetails/Cabin/suite.jpg" alt="Suite Room" />
+			    <h4>Suite Room<span>(4A)</span></h4>
+			    <p>Suite room, luxurious space for the best cruise experience.</p>
 		    </div>
 		    <div class="clear"></div>
 	    </div>	

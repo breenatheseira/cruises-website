@@ -25,6 +25,13 @@ namespace ddac.Account
             {
                 RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
             }
+
+            if (!string.IsNullOrEmpty((String)Session["PleaseLogin"]))
+            {
+                ErrorMessage.Visible = true;
+                FailureText.Text = (String)Session["PleaseLogin"] + "\n";
+                Session["PleaseLogin"] = "";
+            }
         }
 
         protected void LogIn(object sender, EventArgs e)

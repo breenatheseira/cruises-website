@@ -11,12 +11,12 @@
         <div class="account">				
             <h3><%: Title %>.</h3>
             <h4>Use a local account to log in.</h4>
-            <hr />
             <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
                 <p class="text-danger">
                     <asp:Literal runat="server" ID="FailureText" />
                 </p>
             </asp:PlaceHolder>
+            <hr />
             <div class="form-group">
                 <asp:Label runat="server" AssociatedControlID="UserName" CssClass="col-md-2 control-label">User name</asp:Label>
                 <div class="col-md-10">

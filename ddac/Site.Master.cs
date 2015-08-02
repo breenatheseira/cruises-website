@@ -79,6 +79,18 @@ namespace ddac
                 LoginLink1.Visible = true;
                 WelcomeText1.Visible = false;
                 LogOffLink1.Visible = false;
+
+                String myBookingPage = "/MyBooking";
+                String paymentPage = "/Payment";
+                String bookingPage = "/Booking";
+
+                String currentPage = Request.CurrentExecutionFilePath;
+
+                if (currentPage.Equals(myBookingPage) || currentPage.Equals(bookingPage) || currentPage.Equals(paymentPage))
+                {
+                    Session["PleaseLogin"] = "Please login to view the requested page";
+                    Response.Redirect("./Account/Login.aspx");
+                }
             }
             else
             {

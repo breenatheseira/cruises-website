@@ -44,7 +44,8 @@
 		                    </div>
 		                </div>
 		                <!--/slide -->
-		            </div>		            
+		            </div>
+                    <div class="timers"></div>
 		            <div class="slidePrev"><span> </span></div>
 		            <div class="slideNext"><span> </span></div>
 		        </div>

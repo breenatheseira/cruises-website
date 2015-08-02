@@ -18,10 +18,9 @@
 }
 
 #fwslider .slidePrev {
-    position: absolute;
+    position: relative;
     top:50%;
-    left:-50px;
-    
+    left:-20px;
     z-index: 10;
 }
 #fwslider .slidePrev span {
@@ -34,9 +33,9 @@
 	cursor: pointer;
 }
 #fwslider .slideNext {
-    position: absolute;
+    position: relative;
     top:50%;
-    right:-50px;
+    right:-20px;
     z-index: 10;
 }
 #fwslider .slideNext span {
@@ -75,7 +74,7 @@
 }
 
 #fwslider .slide_content {
-    top:0;
+    top:50px;
     left:0;
     position: absolute;
     width:100%;

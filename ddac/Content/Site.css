@@ -307,7 +307,7 @@ select option{
 /* start grids_of_3 */
 .grids_of_3{
 	display: block;
-	padding: 4% 2% 12%;
+	padding: 2% 2% 12%;
 }
 .grid1_of_3{
 	float: left;

@@ -309,16 +309,7 @@ select option{
 	display: block;
 	padding: 2% 2% 12%;
 }
-.grid1_of_3{
-	float: left;
-	width: 30.333333%;
-	margin-left: 4.33333%;
-
-}
-.grid1_of_3:first-child{
-	margin-left: 0;
-}
-.grid1_of_3 h4 a{
+.col-md-3 h4 {
 	margin: 4% 0;
 	display:block;
 	font-size: 1.5em;
@@ -330,21 +321,20 @@ select option{
 	-o-transition: all 0.3s ease-in-out;
 	transition: all 0.3s ease-in-out;
 }
-.grid1_of_3 h4 span{
-	font-weight: 600;
+.col-md-3 h4 span{
+	font-weight: 300;
 	padding-left: 10px;
 	color: #202020;
+    font-size: 1.0em;
 }
-.grid1_of_3 h4 a:hover{
-	color: #202020;
-}
-.grid1_of_3 p{
+.col-md-3 p{
 	font-size: 0.8725em;
 	color: #6b6b6b;
 	line-height: 1.8em;
+    text-align:justify;
 }
 .grid1_of_3_img{
-		position: relative;	
+    position: relative;	
 }
 /* start footer */
 .footer{

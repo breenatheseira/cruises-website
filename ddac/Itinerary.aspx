@@ -5,7 +5,6 @@
 		    $("#fDate,#tDate").datepicker();		    
 		});
 	</script>
-
     <script type="text/javascript">
         function LoadDiv(url) {
             var img = new Image();
@@ -156,11 +155,13 @@
                 </tr>
 				<tr>
                     <td>Journey Date: </td>
-                    <asp:Repeater ID="JourneyDateList" runat="server" DataSource='<%# GetJourneyDate((int)(Eval("ItineraryID"))) %>'>    
-                    <ItemTemplate>
-                        <asp:Label ID="JourneyDateLabel" runat="server" Text='<%#Eval("JD") %>'/>
-                    </ItemTemplate>
-                    </asp:Repeater>
+                    <td>
+                        <asp:Repeater ID="JourneyDateList" runat="server" DataSource='<%# GetJourneyDate((int)(Eval("ItineraryID"))) %>'>    
+                            <ItemTemplate>
+                                <asp:Label ID="JourneyDateLabel" runat="server" Text='<%#Eval("JD") %>'/>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align:center">

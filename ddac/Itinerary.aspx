@@ -144,7 +144,7 @@
                 <tr>
                     <td>Price: </td>
                     <td>
-                        <asp:Label ID="PriceLabel" Text='<%# Eval("Price") %>' runat="server"></asp:Label>
+                        $<asp:Label ID="PriceLabel" Text='<%# Eval("Price") %>' runat="server"></asp:Label>
                     </td>
                 </tr>
                 <tr>

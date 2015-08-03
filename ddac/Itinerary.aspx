@@ -159,7 +159,7 @@
                     <td>
                         <asp:Repeater ID="JourneyDateList" runat="server" DataSource='<%# GetJourneyDate((int)(Eval("ItineraryID"))) %>'>    
                             <ItemTemplate>
-                                <asp:Label ID="JourneyDateLabel" runat="server" Text='<%#Eval("JD") %>'/>
+                                <asp:Label ID="JourneyDateLabel" runat="server" Text='<%#DataBinder.Eval(Container.DataItem,"JD","{0:MMM dd, yyyy}<br/>") %>'/>
                             </ItemTemplate>
                         </asp:Repeater>
                     </td>

@@ -8,6 +8,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using SendGrid;
+using System.Net;
+using System.Net.Mail;
+using System.IO;
 
 namespace ddac
 {
@@ -17,6 +21,7 @@ namespace ddac
         String sql;
         SqlCommand cmd;
         SqlDataReader rdr;
+        String bookingID;
 
         String email = "breenatheseira-facilitator@yahoo.com";
         String ReturnUrl = "http://carnivalcruise.azurewebsites.net/Payment.aspx";
@@ -28,7 +33,7 @@ namespace ddac
             if (string.IsNullOrEmpty((String)Request.Params["bookingID"]))
                 Response.Redirect("./Itinerary.aspx");
 
-            String bookingID = (String)Request.Params["bookingID"];
+            bookingID = (String)Request.Params["bookingID"];
             LoadValues(bookingID);
 
             if (!string.IsNullOrEmpty((String)Request.Params["tx"]))
@@ -43,6 +48,7 @@ namespace ddac
                         notification.Text = "Thank you for your payment. Your transaction has been completed, and a receipt for your purchase has been emailed to you. You may log into your account at www.paypal.com to view details of this transaction.";
                         notification.ForeColor = System.Drawing.Color.Green;
                         setPaymentStatusLabel((String)Request.Params["PaymentStatus"], (String)Request.Params["amt"], bookingID);
+                        Send((String)Session["PassengerName"], (String)Session["PassengerEmail"]);
                     }
                     else
                     {
@@ -185,6 +191,92 @@ namespace ddac
                 PaymentStatusLabel.ForeColor = System.Drawing.Color.Red;
                 HeadingLabel.Text = "Please Confirm Booking #" + bookingID + " :";
             }
+        }
+
+        public void Send(string ToName, string ToEmail)
+        {
+
+            String PassengerID = (String)Session["PassengerID"];
+            sql = "SELECT Name, Email FROM Passenger WHERE PassengerID = '" + PassengerID + "'";
+            try
+            {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.Read())
+                {
+                    String PassengerName = rdr["Name"].ToString();
+                    String PassengerEmail = rdr["Email"].ToString();
+                    String dateDLL = (String)Session["dateDDL"];
+                    conn.Close();
+                }
+            }
+            catch (Exception err)
+            {
+                conn.Close();
+                notification.ForeColor = System.Drawing.Color.Red;
+                notification.Text = err.Message;
+            }
+
+
+            // SendGrid credentials
+            var credentials = new NetworkCredential(
+                ConfigurationManager.AppSettings["SendGridUserId"],
+                ConfigurationManager.AppSettings["SendGridPassword"]);
+
+
+            // Create the email object first, then add the properties.
+            SendGridMessage myMessage = new SendGridMessage();
+            myMessage.AddTo("gtee2311@gmail.com");
+            myMessage.From = new MailAddress("Admin@carnivalcorporation.com", "Carnival Corporation");
+            myMessage.Subject = "Successful Purchase of Cruise Ticket Booking #" + bookingID;
+            myMessage.Html = "<h1>Acknowledgement of Booking # Ticket Purchase</h1>" +
+                                        "<p>You have successfully booked your cruise with the following details:</p>" +
+                                        "	<ul>" +
+                                        "		<li>" +
+                                        "		  Passenger:" + (String)Session["PassengerName"] +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  BookingID:" + bookingID +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  ItineraryID:" + ItineraryIDLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Cabin Type:" + CabinTypeLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Region:" + RegionLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Source:" + SourceLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Ship Name:" + ShipNameLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Journey Date:" + JDateLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Total Price:" + TotalPriceLabel.Text +
+                                        "		</li>" +
+                                        "		<li>" +
+                                        "		  Payment Date:" + BDateLabel.Text +
+                                        "		</li>" +
+                                        "	</ul>" +
+                                        "	</br>" +
+                                        "<p>Thank you for booking your cruise with Carnival Corporation.</p>" +
+                                        "<p>Enjoy your cruise!</p>" +
+                                        "</br>" +
+                                        "<p>Best Regards,</p>" +
+                                        "<p>Carnival Corporation</p>";
+
+            // Create an Web transport for sending email, using credential
+            var transportWeb = new Web(credentials);
+
+            // Send the email.
+            transportWeb.DeliverAsync(myMessage);
         }
     }
 }

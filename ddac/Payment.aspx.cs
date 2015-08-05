@@ -23,7 +23,7 @@ namespace ddac
         SqlDataReader rdr;
         String bookingID;
 
-        String email = "breenatheseira-facilitator@yahoo.com";
+        String email = "gtee-facilitator@hotmail.my";
         String ReturnUrl = "http://carnivalcruise.azurewebsites.net/Payment.aspx";
         String CancelUrl = "http://carnivalcruise.azurewebsites.net/Payment.aspx";
 
@@ -206,8 +206,8 @@ namespace ddac
 
                 if (rdr.Read())
                 {
-                    String PassengerName = rdr["Name"].ToString();
-                    String PassengerEmail = rdr["Email"].ToString();
+                    Session["PassengerName"] = rdr["Name"].ToString();
+                    Session["PassengerEmail"] = rdr["Email"].ToString();
                     String dateDLL = (String)Session["dateDDL"];
                     conn.Close();
                 }
@@ -228,7 +228,7 @@ namespace ddac
 
             // Create the email object first, then add the properties.
             SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo("gtee2311@gmail.com");
+            myMessage.AddTo((String)Session["PassengerEmail"]);
             myMessage.From = new MailAddress("Admin@carnivalcorporation.com", "Carnival Corporation");
             myMessage.Subject = "Successful Purchase of Cruise Ticket Booking #" + bookingID;
             myMessage.Html = "<h1>Acknowledgement of Booking # Ticket Purchase</h1>" +

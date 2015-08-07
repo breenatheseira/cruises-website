@@ -98,19 +98,18 @@ namespace ddac
             Session["region"] = RegionDropDown.SelectedValue.ToString();
             Decimal d = Convert.ToDecimal((String)Request.Form["price"]);
             Session["price"] = Convert.ToInt32((String)Request.Form["price"]);
-    
+
             if (!"DD/MM/YYYY".Equals((String)Request["fDate"]) && !"DD/MM/YYYY".Equals((String)Request["tDate"]))
             {
                 fromDate = Convert.ToDateTime((String)Request.Form["fDate"]);
                 toDate = Convert.ToDateTime((String)Request.Form["tDate"]);
             }
-    
+
             var fromDateFormat = fromDate.Date.ToString("yyyy-MM-dd");
             var toDateFormat = toDate.Date.ToString("yyyy-MM-dd");
             Session["dateTo"] = toDateFormat;
             Session["dateFrom"] = fromDateFormat;
             ilbind();
         }
-
     }
 }

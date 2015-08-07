@@ -17,7 +17,7 @@
 						<p>Singapore 018983</p>
 				   		<p>Phone:(65) 6922 6788</p>				   		
 				 	 	<p>Email: <a href="mailto:carnival.corporation@mail.com">support@carnival-sg.com</a></p>
-				   		<p>Follow on: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
+				   		<p>Follow on: <a href="https://www.facebook.com/PrincessCruises?fref=ts">Facebook</a>, <a href="https://twitter.com/PrincessCruises">Twitter</a></p>
 				   </div>
 				</div>				
 				<div class="contact_right">

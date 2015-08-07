@@ -764,7 +764,7 @@ span.next:hover {
 	line-height: 1.5em;
 	font-size: 0.7825em;
 }
-.contact-form input[type="text"],.contact-form textarea{
+.contact-form input[type="text"], input[type="email"],.contact-form textarea{
 	font-family: 'Open Sans', sans-serif;
 	margin-top: 5px;
 	padding: 10px;

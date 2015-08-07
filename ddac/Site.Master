@@ -68,7 +68,7 @@
         </script>
 
         <!-- start header -->
-        <div class="header_bg">
+        <div class="header_bg" style="display:block">
         <div class="wrap">
 	        <div class="header">
 		        <div class="logo">

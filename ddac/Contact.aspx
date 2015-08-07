@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ddac.Contact" %>
+﻿<%@ Page enableEventValidation="False" Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="ddac.Contact" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
 </asp:Content>
@@ -16,37 +16,44 @@
 						<p>10 Marina Boulevard Tower 2, #14-02, Lorem,</p>
 						<p>Singapore 018983</p>
 				   		<p>Phone:(65) 6922 6788</p>				   		
-				 	 	<p>Email: <a href="mailto:support@carnival-sg.com">support@carnival-sg.com</a></p>
+				 	 	<p>Email: <a href="mailto:carnival.corporation@mail.com">support@carnival-sg.com</a></p>
 				   		<p>Follow on: <a href="#">Facebook</a>, <a href="#">Twitter</a></p>
 				   </div>
 				</div>				
 				<div class="contact_right">
 				  <div class="contact-form">
-				  	<h3>Contact Us</h3>
-					    <form method="post" action="contact-post.html">
-					    	<div>
-						    	<span><label>NAME</label></span>
-						    	<span><input name="userName" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>E-MAIL</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						     	<span><label>MOBILE</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>SUBJECT</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
-						    </div>
-						   <div>
-						   		<span><input type="submit" value="submit us"></span>
-						  </div>
-					    </form>
+				  	<h3>Contact Us</h3>					    
+					    <div>
+						    <span><label>NAME</label></span>
+						    <span><asp:TextBox ID="name" runat="server"/></span>
+						</div>
+						<div>
+						    <span><label>E-MAIL</label></span>
+						    <span><asp:TextBox ID="email" runat="server" TextMode="Email" CssClass="contact-form span"/></span>
+						</div>
+						<div>
+						    <span><label>MOBILE</label></span>
+						    <span><asp:TextBox ID="mobile" runat="server"/></span>
+						</div>
+						<div>
+						    <span><label>SUBJECT</label></span>
+						    <span><asp:TextBox ID="subject" runat="server"/></span>
+						</div>
+                        <div>
+						    <span><label>MESSAGE</label></span>
+						    <span><asp:TextBox ID="message" TextMode="MultiLine" runat="server"/></span>
+						</div>
+						<div>
+						   	<span><asp:Button ID="Submit" OnClick="Submit_Click" runat="server" Text="Send Mail"/></span>
+						</div>
 				    </div>
   				</div>		
-  				<div class="clear"></div>		
+  				<div class="clear"></div>
+            <asp:RegularExpressionValidator ID="mobileRegulator" runat="server" ErrorMessage="Mobile is not in the correct format." ControlToValidate="mobile" Display="Dynamic" ForeColor="Red" ValidationExpression="^[0-9]*$"></asp:RegularExpressionValidator>
+            <asp:RequiredFieldValidator ID="nameRequired" runat="server" ErrorMessage="Name is Required." Display="Dynamic" ControlToValidate="name" ForeColor="Red"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="emailRequired" runat="server" ErrorMessage="Email is Required." Display="Dynamic" ControlToValidate="email" ForeColor="Red"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="subjectRequired" runat="server" ErrorMessage="Subject is Required." Display="Dynamic" ControlToValidate="subject" ForeColor="Red"></asp:RequiredFieldValidator>
+            <asp:RequiredFieldValidator ID="messageRequired" runat="server" ErrorMessage="Message is Required." Display="Dynamic" ControlToValidate="message" ForeColor="Red"></asp:RequiredFieldValidator>
 		  </div>
 	</div>
 </div>
